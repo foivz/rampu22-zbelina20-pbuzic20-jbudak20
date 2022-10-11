@@ -14,7 +14,6 @@ Nakon vaše prijave bit će vam dodijeljen mentor s kojim ćete tijekom semestra
 # Lost & Found App
 
 ## Projektni tim
-(svi članovi tima moraju biti iz iste seminarske grupe)
 
 Ime i prezime | E-mail adresa (FOI) | JMBAG | Github korisničko ime | Seminarska grupa
 ------------  | ------------------- | ----- | --------------------- | ----------------
