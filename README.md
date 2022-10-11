@@ -23,7 +23,7 @@ Josip Budak | jbudak20@student.foi.hr | ... | jbudak20 | G01
 Patrik Bužić | pbuzic20@student.foi.hr | 0016146757 | pbuzic20 | G01
 
 ## Opis domene
-Login & Found App je aplikacija koja će omogućiti ljudima da lakše pronađu svoje izgubljene stvari. Aplikacija je prvotno osmišljena za stanovnike Studentskog doma Varaždin. 
+Login & Found App je aplikacija koja će omogućiti ljudima da lakše pronađu svoje izgubljene stvari. Aplikacija je prvotno osmišljena za stanare Studentskog doma Varaždin. 
 
 ## Specifikacija projekta
 Umjesto ovih uputa opišite zahtjeve za funkcionalnošću mobilne aplikacije ili aplikacije za pametne uređaje. Pobrojite osnovne funkcionalnosti i za svaku naznačite ime odgovornog člana tima. Opišite osnovnu buduću arhitekturu programskog proizvoda. Obratite pozornost da mobilne aplikacije često zahtijevaju pozadinske servise. Također uzmite u obzir da bi svaki član tima trebao biti odgovoran za otprilike 3 funkcionalnosti, te da bi opterećenje članova tima trebalo biti ujednačeno. Priložite odgovarajuće dijagrame i skice gdje je to prikladno. Funkcionalnosti sustava bobrojite u tablici ispod koristeći predložak koji slijedi:
