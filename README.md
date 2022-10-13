@@ -22,22 +22,25 @@ Josip Budak | jbudak20@student.foi.hr | 0016147588 | jbudak20 | G01
 Patrik Bužić | pbuzic20@student.foi.hr | 0016146757 | pbuzic20 | G01
 
 ## Opis domene
-Lost & Found App je aplikacija koja će omogućiti ljudima da lakše pronađu svoje izgubljene stvari. Aplikacija je prvotno osmišljena za stanare Studentskog doma Varaždin. 
+Primjetili smo da je zadnjih godina broj izgubljenih stvari na području studentskog doma Varaždin izrazito velik. Studenti su za izgubljenu imovinu kreirali objave na Facebook-u, unutar grupe za studentski dom. Objave unutar Facebook grupa su nepregledne, oskudne te su se brzo izgubile među ostalim objavama. Želimo kreirati rješenje ovog problema pod nazivom Lost & Found App (L&F). Lost & Found App (L&F) je aplikacija koja će omogućiti studentima da lakše pronađu svoju izgubljenu imovinu ili pomognu drugima da pronađu izgubljenu imovinu. Aplikacija je prvotno osmišljena za stanare Studentskog doma Varaždin, no u budućnosti bi se mogla proširiti na ostale studentske domove ili veća područja.      
 
 ## Specifikacija projekta
-Kako bi korisnik mogao koristiti aplikaciju, mora napraviti svoj korisnički račun. Prijavljivanjem u sustav, korisniku se odmah prikaže lista objava, odnosno stvari koje su izgubljene. Klikom na neku od objava otvaraju mu se detalji vezani uz objavu. Pod detalje se misli kada je stvar izgubljena, gdje je posljednji put viđena ili možda mjesto na kojem je ostavljena. Ukoliko neki od korisnika aplikacije ima informaciju vezanu uz izgubljenu stvar, može komentirati objavu. 
-/*Umjesto ovih uputa opišite zahtjeve za funkcionalnošću mobilne aplikacije ili aplikacije za pametne uređaje. Pobrojite osnovne funkcionalnosti i za svaku naznačite ime odgovornog člana tima. Opišite osnovnu buduću arhitekturu programskog proizvoda. Obratite pozornost da mobilne aplikacije često zahtijevaju pozadinske servise. Također uzmite u obzir da bi svaki član tima trebao biti odgovoran za otprilike 3 funkcionalnosti, te da bi opterećenje članova tima trebalo biti ujednačeno. Priložite odgovarajuće dijagrame i skice gdje je to prikladno. Funkcionalnosti sustava bobrojite u tablici ispod koristeći predložak koji slijedi:*/
+Kako bi korisnik mogao koristiti aplikaciju, mora napraviti svoj korisnički račun. Nakon što se korisnik registrirao i prijavio u aplikaciju, na zaslonu mu se prikazuju objave od drugih korisnika. Zaslon ima dva dijela: "Izgubio sam" i "Pronašao sam" koje će moći filtrirati i pretraživati. Nakon otvaranja objave korisnik će ju moći komentirati i kontaktirati objavitelja te objave. Ako se korisnik odluči kreirati svoju objavu, nju će moći izmjenjivati i obrisati.
 
 Oznaka | Naziv | Kratki opis | Odgovorni član tima
 ------ | ----- | ----------- | -------------------
-F01 | Login | Za pristup aplikacija korisnik mora imati vlastiti korisnički račun | Zlatko Stapić
-F02 | Pregled objava | Korisnik će imat uvid u sve objave, odnosno izgubljene stvari.  | ...
-F03 | CRUD objava | Korisnik će moći kreirati, uređivati te brisati objavu ukoliko je izgubio neku stvar | ----
-F04 | Komentiranje objava | Korisnik će imati mogućnost komentiranja objave | ----
-F05 | Praćenje objava | Kako bi korisnik vidio je li određena stvar pronađena, korisnik će moći pratiti objavu. | -----
+F01 | Login i registracija | Za pristup aplikacija korisnik mora imati vlastiti korisnički račun | Josip Budak
+F02 | Pregledati objave | Korisnik će imati uvid u sve objave, odnosno izgubljene stvari.  | Josip Budak
+F03 | Kreirati objave | Korisnik će moći kreirati objavu vezanu uz pronalazak ili gubitak imovine. | Josip Budak
+F05 | Brisati i ažurirati objave | Korisnik će moći brisati te ažurirati objavu vezanu uz pronalazak ili gubitak imovine. | Patrik Bužić
+F04 | Komentirati objave | Korisnik će imati mogućnost komentiranja objave. | Patrik Bužić
+F06 | Notificirati korisnika | Korisnik će dobivati obavijesti o stanju objava (komentar, . | Patrik Bužić
+F07 | Filtrirati objave | Korisnik će moći flitrirati sve objave po vrsti imovine. | Zvonimir Belina
+F08 | Kontaktirati osobe koja su kreirale objave | Korisnik će moći stupiti u kontakt s osobom koja je kreirala objavu.| Zvonimir Belina
+F09 | Pretraživati objave | Korisnik će moći pretraživati objave po nazivu objave.| Zvonimir Belina
 
 ## Tehnologije i oprema
-Za izradu same aplikacije koristit ćemo 'Android Studio'. Smatram da nam neće biti potrebna neka dodatna tehnologija.
+Za izradu same aplikacije koristit ćemo 'Android Studio' unutar kojeg je emulator za razne uređaje, pomoću kojeg ćemo testirati aplikaciju. Verzioniranje programskog koda će se provoditi preko git-a i Github-a. Smatramo da nam neće biti potrebna neka dodatna tehnologija.
 
 /*Umjesto ovih uputa jasno popišite sve tehnologije, alate i opremu koju ćete koristiti pri implementaciji vašeg rješenja. Vaše rješenje može biti implementirano u bilo kojoj tehnologiji za razvoj mobilnih aplikacija ili aplikacija za pametne uređaje osim u hibridnim web tehnologijama kao što su React Native ili HTML+CSS+JS. Tehnologije koje ćete koristiti bi trebale biti javno dostupne, a ako ih ne budemo obrađivali na vježbama u vašoj dokumentaciji ćete morati navesti način preuzimanja, instaliranja i korištenja onih tehnologija koje su neopbodne kako bi se vaš programski proizvod preveo i pokrenuo. Pazite da svi alati koje ćete koristiti moraju imati odgovarajuću licencu. Što se tiče zahtjeva nastavnika, obvezno je koristiti git i GitHub za verzioniranje programskog koda, GitHub Wiki za pisanje jednostavne dokumentacije sukladno uputama mentora, a projektne zadatke je potrebno planirati i pratiti u alatu GitHub projects.*/
 
