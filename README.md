@@ -34,7 +34,7 @@ F02 | Pregledati objave | Korisnik će imati uvid u sve objave, odnosno izgublje
 F03 | Kreirati objave | Korisnik će moći kreirati objavu vezanu uz pronalazak ili gubitak imovine. | Josip Budak
 F05 | Brisati i ažurirati objave | Korisnik će moći brisati te ažurirati objavu vezanu uz pronalazak ili gubitak imovine. | Patrik Bužić
 F04 | Komentirati objave | Korisnik će imati mogućnost komentiranja objave. | Patrik Bužić
-F06 | Notificirati korisnika | Korisnik će dobivati obavijesti o stanju objava (komentar, . | Patrik Bužić
+F06 | Notificirati korisnika | Korisnik će dobivati obavijesti (komentar, promjena stanja objave...). | Patrik Bužić
 F07 | Filtrirati objave | Korisnik će moći flitrirati sve objave po vrsti imovine. | Zvonimir Belina
 F08 | Kontaktirati osobe koja su kreirale objave | Korisnik će moći stupiti u kontakt s osobom koja je kreirala objavu.| Zvonimir Belina
 F09 | Pretraživati objave | Korisnik će moći pretraživati objave po nazivu objave.| Zvonimir Belina
