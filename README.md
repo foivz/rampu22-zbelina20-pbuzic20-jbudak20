@@ -22,7 +22,7 @@ Josip Budak | jbudak20@student.foi.hr | 0016147588 | jbudak20 | G01
 Patrik Bužić | pbuzic20@student.foi.hr | 0016146757 | pbuzic20 | G01
 
 ## Opis domene
-Login & Found App je aplikacija koja će omogućiti ljudima da lakše pronađu svoje izgubljene stvari. Aplikacija je prvotno osmišljena za stanare Studentskog doma Varaždin. 
+Lost & Found App je aplikacija koja će omogućiti ljudima da lakše pronađu svoje izgubljene stvari. Aplikacija je prvotno osmišljena za stanare Studentskog doma Varaždin. 
 
 ## Specifikacija projekta
 Kako bi korisnik mogao koristiti aplikaciju, mora napraviti svoj korisnički račun. Prijavljivanjem u sustav, korisniku se odmah prikaže lista objava, odnosno stvari koje su izgubljene. Klikom na neku od objava otvaraju mu se detalji vezani uz objavu. Pod detalje se misli kada je stvar izgubljena, gdje je posljednji put viđena ili možda mjesto na kojem je ostavljena. Ukoliko neki od korisnika aplikacije ima informaciju vezanu uz izgubljenu stvar, može komentirati objavu. 
