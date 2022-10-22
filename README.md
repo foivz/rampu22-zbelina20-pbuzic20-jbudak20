@@ -40,11 +40,11 @@ F08 | Kontaktirati osobe koja su kreirale objave | Korisnik će moći stupiti u 
 F09 | Pretraživati objave | Korisnik će moći pretraživati objave po nazivu objave.| Zvonimir Belina
 
 ## Tehnologije i oprema
-Za izradu same aplikacije koristit ćemo 'Android Studio' unutar kojeg je emulator za razne uređaje, pomoću kojeg ćemo testirati aplikaciju. Verzioniranje programskog koda će se provoditi preko git-a i Github-a. Smatramo da nam neće biti potrebna neka dodatna tehnologija.
+Za izradu same aplikacije koristit ćemo 'Android Studio' unutar kojeg je emulator za razne uređaje, pomoću kojeg ćemo testirati aplikaciju. Verzioniranje programskog koda će se provoditi preko git-a i Github-a, a za pohranu podataka korisitmo MySQL bazu podataka. Smatramo da nam neće biti potrebna neka dodatna tehnologija.
 
 
 ## Baza podataka i web server
-Nastavnici vam mogu pripremiti MySQL bazu podataka i web server na kojem možete postaviti jednostavne php web servise. Ako želite da vam pripremimo ove sustave obavezno to navedite umjesto ovog teksta s napomenom "Trebamo bazu podataka i pristup serveru za PHP skripte". Alternativno, možete koristiti bilo koji online dostupan sustav kao i studentske licence na pojedinim platformama kao što su Heroku ili Azure.
+"Trebamo bazu podataka i pristup serveru za PHP skripte"
 
 ## .gitignore
 Uzmite u obzir da je u mapi Software .gitignore konfiguriran za nekoliko tehnologija, ali samo ako će projekti biti smješteni direktno u mapu Software ali ne i u neku pod mapu. Nakon odabira konačne tehnologije i projekta obavezno dopunite/premjestite gitignore kako bi vaš projekt zadovoljavao kriterije koji su opisani u ReadMe.md dokumentu dostupnom u mapi Software.
