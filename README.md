@@ -31,8 +31,8 @@ Oznaka | Naziv | Kratki opis | Odgovorni član tima
 ------ | ----- | ----------- | -------------------
 F01 | Login i registracija | Za pristup aplikacija korisnik mora imati vlastiti korisnički račun | Josip Budak
 F02 | Pregledati objave | Korisnik će imati uvid u sve objave, odnosno izgubljene stvari.  | Josip Budak
-F03 | Kreirati objave | Korisnik će moći kreirati objavu vezanu uz pronalazak ili gubitak imovine. | Josip Budak
-F05 | Brisati i ažurirati objave | Korisnik će moći brisati te ažurirati objavu vezanu uz pronalazak ili gubitak imovine. | Patrik Bužić
+F03 | Kreirati objave | Korisnik će moći kreirati objavu vezanu uz pronalazak ili gubitak imovine. | Patrik Bužić
+F05 | Brisati i ažurirati objave | Korisnik će moći brisati te ažurirati objavu vezanu uz pronalazak ili gubitak imovine. | Josip Budak
 F04 | Komentirati objave | Korisnik će imati mogućnost komentiranja objave. | Patrik Bužić
 F06 | Notificirati korisnika | Korisnik će dobivati obavijesti (komentar, promjena stanja objave...). | Patrik Bužić
 F07 | Filtrirati objave | Korisnik će moći flitrirati sve objave po vrsti imovine. | Zvonimir Belina
