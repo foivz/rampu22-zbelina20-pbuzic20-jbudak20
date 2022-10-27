@@ -36,7 +36,7 @@ F05 | Brisati i ažurirati objave | Korisnik će moći brisati te ažurirati obj
 F04 | Komentirati objave | Korisnik će imati mogućnost komentiranja objave. | Patrik Bužić
 F06 | Notificirati korisnika | Korisnik će dobivati obavijesti (komentar, promjena stanja objave...). | Patrik Bužić
 F07 | Filtrirati i pretraživati objave | Korisnik će moći flitrirati sve objave po vrsti imovine. Korisnik će moći pretraživati proizvode po imenima. | Zvonimir Belina
-F08 | Kontaktirati osobe koja su kreirale objave putem privatne poruke | Korisnik će moći stupiti u kontakt s osobom koja je kreirala objavu preko privatne poruke.| Zvonimir Belina
+F08 | Kontaktirati osobe koja su kreirale objave putem poziva. | Korisnik će moći stupiti u kontakt s osobom koja je kreirala objavu preko poziva.| Zvonimir Belina
 F09 | Izraditi grafička izvješća  | Aplikacija će izrađivati grafička izvješća o ukupnim mjesečnim i izgubljenim i pronađenim predmetima. | Josip Budak
 ## Tehnologije i oprema
 Za izradu same aplikacije koristit ćemo 'Android Studio' unutar kojeg je emulator za razne uređaje, pomoću kojeg ćemo testirati aplikaciju. Verzioniranje programskog koda će se provoditi preko git-a i Github-a, a za pohranu podataka korisitmo MySQL bazu podataka. Smatramo da nam neće biti potrebna neka dodatna tehnologija.
