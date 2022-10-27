@@ -30,15 +30,14 @@ Kako bi korisnik mogao koristiti aplikaciju, mora napraviti svoj korisnički ra�
 Oznaka | Naziv | Kratki opis | Odgovorni član tima
 ------ | ----- | ----------- | -------------------
 F01 | Login i registracija | Za pristup aplikacija korisnik mora imati vlastiti korisnički račun | Josip Budak
-F02 | Pregledati objave | Korisnik će imati uvid u sve objave, odnosno izgubljene stvari.  | Josip Budak
+F02 | Pregledati objave | Korisnik će imati uvid u sve objave, odnosno izgubljene stvari.  | Zvonimir Belina
 F03 | Kreirati objave | Korisnik će moći kreirati objavu vezanu uz pronalazak ili gubitak imovine. | Patrik Bužić
 F05 | Brisati i ažurirati objave | Korisnik će moći brisati te ažurirati objavu vezanu uz pronalazak ili gubitak imovine. | Josip Budak
 F04 | Komentirati objave | Korisnik će imati mogućnost komentiranja objave. | Patrik Bužić
 F06 | Notificirati korisnika | Korisnik će dobivati obavijesti (komentar, promjena stanja objave...). | Patrik Bužić
-F07 | Filtrirati objave | Korisnik će moći flitrirati sve objave po vrsti imovine. | Zvonimir Belina
-F08 | Kontaktirati osobe koja su kreirale objave | Korisnik će moći stupiti u kontakt s osobom koja je kreirala objavu.| Zvonimir Belina
-F09 | Pretraživati objave | Korisnik će moći pretraživati objave po nazivu objave.| Zvonimir Belina
-
+F07 | Filtrirati i pretraživati objave | Korisnik će moći flitrirati sve objave po vrsti imovine. Korisnik će moći pretraživati proizvode po imenima. | Zvonimir Belina
+F08 | Kontaktirati osobe koja su kreirale objave putem privatne poruke | Korisnik će moći stupiti u kontakt s osobom koja je kreirala objavu preko privatne poruke.| Zvonimir Belina
+F09 | Izraditi grafička izvješća  | Aplikacija će izrađivati grafička izvješća o ukupnim mjesečnim i izgubljenim i pronađenim predmetima. | Josip Budak
 ## Tehnologije i oprema
 Za izradu same aplikacije koristit ćemo 'Android Studio' unutar kojeg je emulator za razne uređaje, pomoću kojeg ćemo testirati aplikaciju. Verzioniranje programskog koda će se provoditi preko git-a i Github-a, a za pohranu podataka korisitmo MySQL bazu podataka. Smatramo da nam neće biti potrebna neka dodatna tehnologija.
 
