@@ -1,5 +1,3 @@
-# Inicijalne upute za prijavu projekta iz Razvoja aplikacija za mobilne i pametne uređaje
-
 # Lost & Found App
 
 ## Projektni tim
@@ -18,7 +16,7 @@ Kako bi korisnik mogao koristiti aplikaciju, mora napraviti svoj korisnički ra�
 
 Oznaka | Naziv | Kratki opis | Odgovorni član tima
 ------ | ----- | ----------- | -------------------
-F01 | Login i registracija | Za pristup aplikacija korisnik mora imati vlastiti korisnički račun | Josip Budak
+F01 | Login i registracija | Za pristup aplikaciji korisnik mora imati vlastiti korisnički račun | Josip Budak
 F02 | Pregledati objave | Korisnik će imati uvid u sve objave, odnosno izgubljene stvari.  | Zvonimir Belina
 F03 | Kreirati objave | Korisnik će moći kreirati objavu vezanu uz pronalazak ili gubitak imovine. | Patrik Bužić
 F04 | Brisati i ažurirati objave | Korisnik će moći brisati te ažurirati objavu vezanu uz pronalazak ili gubitak imovine. | Josip Budak
