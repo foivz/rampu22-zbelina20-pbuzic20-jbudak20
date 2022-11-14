@@ -3,4 +3,5 @@
     <string name="addPicture">Add Picture</string>
     <string name="description">Description</string>
     <string name="submit">Submit</string>
+    <string name="hello">Hello!</string>
 </resources>
