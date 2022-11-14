@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/bg_gradient_background"
+    android:layout_gravity="center"
+    android:gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/app_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lost and Found"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="25dp"
+        />
+
+    <EditText
+        android:id="@+id/registration_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Korisničko ime"
+        android:textColorHint="@color/white"
+        android:inputType="text"
+        android:autofillHints="no"
+        android:layout_marginBottom="5dp"
+        />
+
+    <EditText
+        android:id="@+id/registration_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Lozinka"
+        android:textColorHint="@color/white"
+        android:inputType="textPassword"
+        android:autofillHints="no"
+        android:layout_marginBottom="5dp"
+        />
+
+    <EditText
+        android:id="@+id/registration_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ime i prezime"
+        android:textColorHint="@color/white"
+        android:inputType="text"
+        android:autofillHints="no"
+        android:layout_marginBottom="5dp"
+        />
+
+    <EditText
+        android:id="@+id/registration_phonenumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Broj telefona"
+        android:textColorHint="@color/white"
+        android:inputType="number"
+        android:autofillHints="no"
+        android:layout_marginBottom="5dp"
+        />
+
+    <Button
+        android:id="@+id/registration_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registriraj"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
+        />
+
+</LinearLayout>
