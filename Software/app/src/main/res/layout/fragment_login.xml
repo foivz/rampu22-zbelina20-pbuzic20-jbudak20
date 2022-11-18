@@ -50,7 +50,7 @@
         />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/btn_Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Prijavi se"
@@ -64,7 +64,7 @@
         android:text="Nemaš korisnički račun? Registriraj se!"
         />
     <Button
-        android:id="@+id/registration_button"
+        android:id="@+id/btn_Register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registracija"
