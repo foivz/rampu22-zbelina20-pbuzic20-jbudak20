@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Lost&amp;Found</string>
-    <string name="addPicture">Add Picture</string>
     <string name="description">Description</string>
     <string name="submit">Submit</string>
     <string name="hello">Hello!</string>
     <string name="picture">Picture</string>
+    <string name="add_picture">Add picture</string>
+    <string name="cancel">Cancel</string>
 </resources>
