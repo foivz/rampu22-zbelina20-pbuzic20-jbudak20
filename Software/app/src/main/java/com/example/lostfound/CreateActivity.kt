@@ -1,61 +1,54 @@
 package com.example.lostfound
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
+import android.provider.MediaStore
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.lostfound.databinding.ActivityCreateBinding
 
-private const val TAG = "CreateActivity"
-private const val  PICK_PHOTO_CODE = 1234
 
-@Suppress("DEPRECATION")
 class CreateActivity : AppCompatActivity() {
+    private lateinit var binding :  ActivityCreateBinding
     private var photoUri: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create)
-        val btnAddPicture = findViewById<Button>(R.id.btn_addPicture)
-        btnAddPicture.setOnClickListener{
-            Log.i(TAG, "Otvori izbor slika iz uređaja")
-            val imagePickerIntent = Intent(Intent.ACTION_GET_CONTENT)
-            imagePickerIntent.type = "image/*"
-            if(imagePickerIntent.resolveActivity(packageManager) != null){
-                startActivityForResult(imagePickerIntent, PICK_PHOTO_CODE)
-            }
+        binding = ActivityCreateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //val btnaddPicture = findViewById<Button>(R.id.btn_addPicture)
+        binding.btnAddPicture.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            pickImage.launch(intent)
         }
-        val btnSubmit = findViewById<Button>(R.id.btn_Submit)
-        btnSubmit.setOnClickListener {
-            dodajSliku()
+
+        binding.btnSubmit.setOnClickListener {
+            provjeriUnos()
+        }
+        binding.btnCancel.setOnClickListener {
+            finish()
         }
     }
-    private fun dodajSliku(){
+
+    private fun provjeriUnos() {
         if(photoUri == null){
-            Toast.makeText(this, "Niste unijeli opis izgubljene stvari", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Niste unijeli sliku izgubljene stvari", Toast.LENGTH_SHORT).show()
             return
         }
         val description = findViewById<EditText>(R.id.et_Description)
         if(description.text.isBlank()){
-            Toast.makeText(this, "Niste unijeli nikakav tekst izgubljene stvari", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Niste unijeli opis izgubljene stvari", Toast.LENGTH_SHORT).show()
             return
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == PICK_PHOTO_CODE){
-            if(resultCode == Activity.RESULT_OK){
-                photoUri = data?.data
-                val imageView = findViewById<ImageView>(R.id.iv_picture)
-                Log.i(TAG, "photoUri $photoUri")
-                imageView.setImageURI(photoUri)
-            }
+    val pickImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if(result.resultCode == RESULT_OK){
+            photoUri = result.data?.data
+            binding.ivPicture.setImageURI(photoUri)
         }
     }
 }
