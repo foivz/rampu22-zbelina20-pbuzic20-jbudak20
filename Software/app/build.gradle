@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'com.example.lostfound'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.lostfound"
         minSdk 26
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
