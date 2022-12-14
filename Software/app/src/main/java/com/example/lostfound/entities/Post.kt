@@ -1,3 +1,3 @@
 package com.example.lostfound.entities
 
-data class Post(var opis: String="")
+data class Post(val title: String, val username: String, val text: String, val photo: String)
