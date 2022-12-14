@@ -20,18 +20,11 @@
         android:layout_marginBottom="25dp"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Prijava"
-        android:textColor="@color/white"
-        />
-
     <EditText
-        android:id="@+id/registration_username"
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Korisničko ime"
+        android:hint="E-Mail adresa"
         android:textColorHint="@color/white"
         android:inputType="text"
         android:autofillHints="no"
@@ -39,35 +32,57 @@
         />
 
     <EditText
-        android:id="@+id/registration_password"
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:textColorHint="@color/white"
+        android:inputType="text"
+        android:autofillHints="no"
+        android:layout_marginBottom="5dp"
+        />
+
+    <EditText
+        android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Lozinka"
         android:textColorHint="@color/white"
         android:inputType="textPassword"
+        android:maxLength="10"
+        android:autofillHints="no"
+        android:layout_marginBottom="5dp"
+        />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ime i prezime"
+        android:textColorHint="@color/white"
+        android:inputType="text"
+        android:autofillHints="no"
+        android:layout_marginBottom="5dp"
+        />
+
+    <EditText
+        android:id="@+id/etPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Broj telefona"
+        android:textColorHint="@color/white"
+        android:inputType="number"
         android:autofillHints="no"
         android:layout_marginBottom="5dp"
         />
 
     <Button
-        android:id="@+id/btn_Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Prijavi se"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nemaš korisnički račun? Registriraj se!"
-        />
-    <Button
         android:id="@+id/btn_Register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registracija"
+        android:text="Registriraj"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
         />
 
 </LinearLayout>

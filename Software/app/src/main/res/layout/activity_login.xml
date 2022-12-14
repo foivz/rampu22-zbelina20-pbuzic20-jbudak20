@@ -20,8 +20,15 @@
         android:layout_marginBottom="25dp"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prijava"
+        android:textColor="@color/white"
+        />
+
     <EditText
-        android:id="@+id/registration_username"
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Korisničko ime"
@@ -32,7 +39,7 @@
         />
 
     <EditText
-        android:id="@+id/registration_password"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Lozinka"
@@ -42,35 +49,24 @@
         android:layout_marginBottom="5dp"
         />
 
-    <EditText
-        android:id="@+id/registration_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ime i prezime"
-        android:textColorHint="@color/white"
-        android:inputType="text"
-        android:autofillHints="no"
-        android:layout_marginBottom="5dp"
-        />
-
-    <EditText
-        android:id="@+id/registration_phonenumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Broj telefona"
-        android:textColorHint="@color/white"
-        android:inputType="number"
-        android:autofillHints="no"
-        android:layout_marginBottom="5dp"
-        />
-
     <Button
-        android:id="@+id/btn_Register"
+        android:id="@+id/btn_Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registriraj"
+        android:text="Prijavi se"
         android:textColor="@color/black"
         android:backgroundTint="@color/white"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nemaš korisnički račun? Registriraj se!"
+        />
+    <Button
+        android:id="@+id/btn_Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registracija"
+        />
 </LinearLayout>
