@@ -35,8 +35,9 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val isLoginSuccessful = loginUser()
             if(isLoginSuccessful) {
-                //tu redirectati na sljedecu aktivnost
-                Toast.makeText(this, "Uspješna prijava!", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, PostsActivity::class.java)
+                startActivity(intent)
             }
             else {
                 return@setOnClickListener
