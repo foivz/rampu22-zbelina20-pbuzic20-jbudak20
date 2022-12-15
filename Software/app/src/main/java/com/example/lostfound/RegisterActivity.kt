@@ -1,5 +1,6 @@
 package com.example.lostfound
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -71,6 +72,8 @@ class RegisterActivity : AppCompatActivity() {
             dbRef.child(newUser.username!!).setValue(newUser)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 }
                 .addOnFailureListener{
                     Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show()
