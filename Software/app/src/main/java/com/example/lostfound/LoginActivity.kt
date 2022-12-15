@@ -39,7 +39,9 @@ class LoginActivity : AppCompatActivity() {
             val isLoginSuccessful = loginUser()
             if(isLoginSuccessful) {
 
+                val user = getUser(etUsername.text.toString())
                 val intent = Intent(this, PostsActivity::class.java)
+                intent.putExtra("user", user)
                 startActivity(intent)
             }
             else {
@@ -94,5 +96,14 @@ class LoginActivity : AppCompatActivity() {
         }
         Toast.makeText(this, "Neispravni podaci", Toast.LENGTH_SHORT).show()
         return false
+    }
+
+    private fun getUser(username : String) : User {
+        for(user in usersList) {
+            if(user.username == username) {
+                return user
+            }
+        }
+        return null!!
     }
 }
