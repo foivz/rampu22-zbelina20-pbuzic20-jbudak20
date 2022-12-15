@@ -21,10 +21,10 @@
         />
 
     <EditText
-        android:id="@+id/registration_username"
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Korisničko ime"
+        android:hint="E-Mail adresa"
         android:textColorHint="@color/white"
         android:inputType="text"
         android:autofillHints="no"
@@ -32,18 +32,31 @@
         />
 
     <EditText
-        android:id="@+id/registration_password"
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Lozinka"
+        android:hint="Username"
         android:textColorHint="@color/white"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:autofillHints="no"
         android:layout_marginBottom="5dp"
         />
 
     <EditText
-        android:id="@+id/registration_name"
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Lozinka"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+        android:textColorHint="@color/white"
+        android:inputType="textPassword"
+        android:maxLength="10"
+        android:autofillHints="no"
+        android:layout_marginBottom="5dp"
+        />
+
+    <EditText
+        android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Ime i prezime"
@@ -54,7 +67,7 @@
         />
 
     <EditText
-        android:id="@+id/registration_phonenumber"
+        android:id="@+id/etPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Broj telefona"
