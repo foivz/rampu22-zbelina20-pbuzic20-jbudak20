@@ -27,7 +27,6 @@ class LoginActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-
         dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("users")
         usersList = mutableListOf()
 
