@@ -25,6 +25,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(activity_login)
 
+        supportActionBar?.hide()
+
+
         dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("users")
         usersList = mutableListOf()
 

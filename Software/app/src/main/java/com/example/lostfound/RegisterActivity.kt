@@ -27,6 +27,8 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        supportActionBar?.hide()
+
         usersList = mutableListOf()
         dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("users")
 
