@@ -19,11 +19,12 @@ class PostsActivity : AppCompatActivity() {
 
     private lateinit var dbRef : DatabaseReference
     private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
+    var posts : ArrayList<Post> = ArrayList()
+    var searchPosts : ArrayList<Post> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.post_feed)
-        val posts : ArrayList<Post> = ArrayList()
 
         dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts")
 
@@ -39,11 +40,12 @@ class PostsActivity : AppCompatActivity() {
                         posts.add(post!!)
                     }
                 }
+                searchPosts.addAll(posts)
             }
         })
 
         rvPosts.layoutManager = LinearLayoutManager(this)
-        rvPosts.adapter = PostAdapter(posts)
+        rvPosts.adapter = PostAdapter(searchPosts)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -74,8 +76,25 @@ class PostsActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?) : Boolean{
-                Toast.makeText(this@PostsActivity, "Looking for $newText", Toast.LENGTH_SHORT).show()
-                return false
+                if(newText!!.isNotEmpty())
+                {
+                    searchPosts.clear()
+
+                    val search = newText.lowercase()
+                    posts.forEach(){
+                        if(it.title?.lowercase()!!.contains(search))
+                        {
+                            searchPosts.add(it)
+                        }
+                    }
+                    rvPosts.adapter?.notifyDataSetChanged()
+                }
+                else{
+                    searchPosts.clear()
+                    searchPosts.addAll(posts)
+                    rvPosts.adapter?.notifyDataSetChanged()
+                }
+                return true
             }
         })
         return true
