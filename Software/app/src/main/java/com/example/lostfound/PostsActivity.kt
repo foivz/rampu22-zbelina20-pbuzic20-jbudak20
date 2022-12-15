@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -11,17 +12,35 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostfound.Adapters.PostAdapter
 import com.example.lostfound.entities.Post
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.post_feed.*
 
 class PostsActivity : AppCompatActivity() {
+
+    private lateinit var dbRef : DatabaseReference
+    private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.post_feed)
         val posts : ArrayList<Post> = ArrayList()
-        for(i in 1..100){
-            posts.add(Post("naslov","zbelina20" + i, "Lorem ipsum doler", "https://picsum.photos/600/300?random&" + i))
-        }
+
+        dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts")
+
+        dbRef.addValueEventListener(object : ValueEventListener { //dohvat podataka
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("DBError", "Neuspješno čitanje podataka: ", error.toException())
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()) {
+                    for(p in snapshot.children) {
+                        val post = p.getValue(Post::class.java)
+                        posts.add(post!!)
+                    }
+                }
+            }
+        })
 
         rvPosts.layoutManager = LinearLayoutManager(this)
         rvPosts.adapter = PostAdapter(posts)
