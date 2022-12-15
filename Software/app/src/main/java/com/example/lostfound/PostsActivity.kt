@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostfound.Adapters.PostAdapter
@@ -63,15 +63,13 @@ class PostsActivity : AppCompatActivity() {
         val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchItem = menu?.findItem(R.id.search)
         val searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
+        val searchText= searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        searchText.hint = "Upišite naslov objave..."
 
         searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
 
         searchView.setOnQueryTextListener(object: androidx.appcompat.widget.SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchView.clearFocus()
-                searchView.setQuery("", false)
-                searchItem.collapseActionView()
-                Toast.makeText(this@PostsActivity, "Looking for $query", Toast.LENGTH_SHORT).show()
                 return true
             }
 
