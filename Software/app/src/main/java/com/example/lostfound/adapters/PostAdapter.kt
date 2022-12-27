@@ -1,6 +1,7 @@
-package com.example.lostfound.Adapters
+package com.example.lostfound.adapters
 
-
+import android.content.Context
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,26 +12,41 @@ import com.example.lostfound.R
 import com.example.lostfound.entities.Post
 import com.squareup.picasso.Picasso
 
-class PostAdapter(val posts: ArrayList<Post>) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val username : TextView = view.findViewById(R.id.username)
-        val text : TextView = view.findViewById(R.id.text)
-        val photo: ImageView = view.findViewById(R.id.photo)
-        val title : TextView = view.findViewById(R.id.title)
+class PostAdapter(private var listPosts : MutableList<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+    private lateinit var context: Context
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
+        context = parent.context
+        val postview: View = LayoutInflater.from(context).inflate(R.layout.post_row, parent, false)
+        return PostViewHolder(postview)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.post_row, parent, false)
-        return ViewHolder(view)
+    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+        val post = listPosts.get(position)
+        holder.title.text = listPosts[position].title
+        holder.currentTime.text = DateUtils.getRelativeTimeSpanString(listPosts[position].creationTimeMs)
+        holder.username.text = listPosts[position].username
+        holder.text.text = listPosts[position].text
+        Picasso.get().load(listPosts[position].photo).into(holder.photo)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.title.text = posts[position].title
-        holder.username.text = posts[position].username
-        holder.text.text = posts[position].text
-        Picasso.get().load(posts[position].photo).into(holder.photo)
-    }
+    override fun getItemCount(): Int = listPosts.size
 
-    override fun getItemCount(): Int = posts.size
+    class PostViewHolder(view: View): RecyclerView.ViewHolder(view){
+        val username : TextView
+        val text : TextView
+        val photo: ImageView
+        val title : TextView
+        val currentTime : TextView
+
+        init {
+            username = view.findViewById(R.id.username)
+            text = view.findViewById(R.id.text)
+            photo = view.findViewById(R.id.photo)
+            title = view.findViewById(R.id.title)
+            currentTime = view.findViewById(R.id.tvRelativeTime)
+        }
+    }
 
 }
