@@ -12,9 +12,9 @@ import com.example.lostfound.R
 import com.example.lostfound.entities.Post
 import com.squareup.picasso.Picasso
 
-class PostAdapter(private var listPosts : MutableList<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(private var clickListener: ClickListener, private var listPosts : MutableList<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     private lateinit var context: Context
-
+    //private var listPosts : List<Post> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         context = parent.context
@@ -29,6 +29,14 @@ class PostAdapter(private var listPosts : MutableList<Post>) : RecyclerView.Adap
         holder.username.text = listPosts[position].username
         holder.text.text = listPosts[position].text
         Picasso.get().load(listPosts[position].photo).into(holder.photo)
+
+        holder.itemView.setOnClickListener {
+            clickListener.clickedItem(post)
+        }
+    }
+
+    interface ClickListener{
+        fun clickedItem(post : Post)
     }
 
     override fun getItemCount(): Int = listPosts.size

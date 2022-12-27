@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lostfound.CreateActivity
+import com.example.lostfound.PostDetailActivity
 import com.example.lostfound.R
 import com.example.lostfound.adapters.PostAdapter
 import com.example.lostfound.databinding.FragmentLostBinding
@@ -16,7 +17,7 @@ import com.example.lostfound.entities.Post
 import com.google.firebase.database.*
 
 
-class LostFragment : Fragment(){
+class LostFragment : Fragment(), PostAdapter.ClickListener {
 
     private lateinit var dbRef : DatabaseReference
     private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
@@ -58,10 +59,20 @@ class LostFragment : Fragment(){
                         val post = p.getValue(Post::class.java)
                         posts.add(post!!)
                     }
-                    postAdapter = PostAdapter(posts)
+                    postAdapter = PostAdapter(this@LostFragment, posts)
                     recyclerView.adapter = postAdapter
                 }
             } //dohvat podataka
         })
+    }
+
+    override fun clickedItem(post: Post) {
+        val intent = Intent(this@LostFragment.requireContext(), PostDetailActivity::class.java)
+        intent.putExtra("username", post.username)
+        intent.putExtra("title", post.title)
+        intent.putExtra("description", post.text)
+        intent.putExtra("imagePost", post.photo.toString())
+        intent.putExtra("PostKey", post.id)
+        startActivity(intent)
     }
 }
