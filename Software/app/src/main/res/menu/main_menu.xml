@@ -7,9 +7,4 @@
         android:icon="@drawable/ic_baseline_search_24"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
-    <item
-        android:id="@+id/createPost"
-        android:title="Create"
-        android:icon="@drawable/ic_baseline_create_24"
-        app:showAsAction="ifRoom|collapseActionView"/>
 </menu>
