@@ -38,6 +38,5 @@ class PostsActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewpager2){ tab, position ->
             tab.setIcon(mainPagerAdapter.fragmentItems[position].iconRes)
         }.attach()
-
     }
 }
