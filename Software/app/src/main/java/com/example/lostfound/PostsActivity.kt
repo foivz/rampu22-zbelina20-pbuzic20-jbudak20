@@ -1,42 +1,100 @@
 package com.example.lostfound
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.SearchManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.viewpager2.widget.ViewPager2
-import com.example.lostfound.adapters.MainPagerAdapter
-import com.example.lostfound.databinding.ActivityPostsBinding
-import com.example.lostfound.fragments.FoundFragment
-import com.example.lostfound.fragments.LostFragment
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.lostfound.Adapters.PostAdapter
+import com.example.lostfound.entities.Post
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.post_feed.*
 
 class PostsActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityPostsBinding
+
+    private lateinit var dbRef : DatabaseReference
+    private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
+    var posts : ArrayList<Post> = ArrayList()
+    var searchPosts : ArrayList<Post> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        val mainPagerAdapter = MainPagerAdapter(supportFragmentManager, lifecycle)
-
-        mainPagerAdapter.addFragment(
-            MainPagerAdapter.FragmentItem(
-                R.drawable.ic_baseline_find_in_page_24,
-                LostFragment::class
-            )
-        )
-        mainPagerAdapter.addFragment(
-            MainPagerAdapter.FragmentItem(
-                R.drawable.ic_baseline_check_circle_24,
-                FoundFragment::class
-            )
-        )
         super.onCreate(savedInstanceState)
-        binding = ActivityPostsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.post_feed)
 
-        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
-        val viewpager2 = findViewById<ViewPager2>(R.id.viewPager2)
+        dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts")
 
-        viewpager2.adapter = mainPagerAdapter
-        TabLayoutMediator(tabLayout, viewpager2){ tab, position ->
-            tab.setIcon(mainPagerAdapter.fragmentItems[position].iconRes)
-        }.attach()
+        dbRef.addValueEventListener(object : ValueEventListener { //dohvat podataka
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("DBError", "Neuspješno čitanje podataka: ", error.toException())
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()) {
+                    for(p in snapshot.children) {
+                        val post = p.getValue(Post::class.java)
+                        posts.add(post!!)
+                    }
+                }
+                searchPosts.addAll(posts)
+            }
+        })
+
+        rvPosts.layoutManager = LinearLayoutManager(this)
+        rvPosts.adapter = PostAdapter(searchPosts)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        if(id == R.id.createPost){
+            val intent = Intent(this, CreateActivity::class.java)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchItem = menu?.findItem(R.id.search)
+        val searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
+        val searchText= searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        searchText.hint = "Upišite naslov objave..."
+
+        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+
+        searchView.setOnQueryTextListener(object: androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?) : Boolean{
+                if(newText!!.isNotEmpty())
+                {
+                    searchPosts.clear()
+
+                    val search = newText.lowercase()
+                    posts.forEach(){
+                        if(it.title?.lowercase()!!.contains(search))
+                        {
+                            searchPosts.add(it)
+                        }
+                    }
+                    rvPosts.adapter?.notifyDataSetChanged()
+                }
+                else{
+                    searchPosts.clear()
+                    searchPosts.addAll(posts)
+                    rvPosts.adapter?.notifyDataSetChanged()
+                }
+                return true
+            }
+        })
+        return true
     }
 }
