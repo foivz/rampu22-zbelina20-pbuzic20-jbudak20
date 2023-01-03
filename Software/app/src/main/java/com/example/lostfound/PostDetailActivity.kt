@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lostfound.adapters.CommentAdapter
 import com.example.lostfound.entities.Comment
+import com.example.lostfound.fragments.EditPostFragment
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_post_detail.*
@@ -26,7 +27,7 @@ class PostDetailActivity : AppCompatActivity() {
     private lateinit var btnAddComment: Button
     private lateinit var postUsername : TextView
     private lateinit var firebaseDatabase : DatabaseReference
-    private lateinit var PostKey : String
+    lateinit var PostKey : String
     private lateinit var recyclerView : RecyclerView
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var comments : MutableList<Comment>
@@ -64,6 +65,11 @@ class PostDetailActivity : AppCompatActivity() {
             if(provjeriUnos()) {
                 dodajKomentar()
             }
+        }
+
+        btnEdit.setOnClickListener {
+            var editFragment = EditPostFragment()
+            editFragment.show(supportFragmentManager,"editFragment")
         }
     }
 
