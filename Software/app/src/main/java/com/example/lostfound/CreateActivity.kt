@@ -2,12 +2,14 @@ package com.example.lostfound
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.lostfound.databinding.ActivityCreateBinding
 import com.example.lostfound.entities.Post
+import com.example.lostfound.entities.User
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -23,13 +25,22 @@ class CreateActivity : AppCompatActivity() {
     private lateinit var databaseReference : DatabaseReference
     private lateinit var adresaSlike: String
 
-
+    private lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        user = if(Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra("user", User::class.java) as User
+        }
+        else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra<User>("user") as User
+        }
+
         binding = ActivityCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        username = intent.getStringExtra("username").toString()
+        username = user.username.toString()
 
 
         initVars()
@@ -43,8 +54,7 @@ class CreateActivity : AppCompatActivity() {
 
     private fun registerClickEvents() {
         binding.btnCancel.setOnClickListener {
-            val intent = Intent(this, PostsActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
         binding.btnAddPicture.setOnClickListener {
@@ -69,8 +79,7 @@ class CreateActivity : AppCompatActivity() {
                         Toast.makeText(this, "Unijet je novi post", Toast.LENGTH_SHORT).show()
                         binding.etTitle.text.clear()
                         binding.etDescription.text.clear()
-                        val intent = Intent(this, PostsActivity::class.java)
-                        startActivity(intent)
+                        finish()
                     }.addOnFailureListener{err ->
                         Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
                     }

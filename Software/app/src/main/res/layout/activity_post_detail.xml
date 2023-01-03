@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/iv_postDetail"
             android:layout_width="0dp"
-            android:layout_height="250dp"
+            android:layout_height="220dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -113,5 +113,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_detail_comment" />
+
+        <TextView
+            android:id="@+id/et_status"
+            android:textSize="18dp"
+            android:textColor="@color/red"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:width="140dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_edit"
+            android:text="EDIT"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btn_post_detail_add"
+            app:layout_constraintTop_toBottomOf="@+id/rv_comments" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>

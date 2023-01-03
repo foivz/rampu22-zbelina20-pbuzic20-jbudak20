@@ -9,5 +9,6 @@ data class Post(
     var username: String? = null,
     var text: String? = null,
     @get:PropertyName("photo") @set:PropertyName("photo") var photo: String? = null,
+    var status : String = "Izgubljeno"
 
     )

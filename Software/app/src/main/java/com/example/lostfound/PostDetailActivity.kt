@@ -3,6 +3,7 @@ package com.example.lostfound
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -29,6 +30,9 @@ class PostDetailActivity : AppCompatActivity() {
     private lateinit var recyclerView : RecyclerView
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var comments : MutableList<Comment>
+    private lateinit var btnEdit : Button
+    private lateinit var status : TextView
+    private lateinit var loggedInUser : String
     private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
 
 
@@ -38,8 +42,7 @@ class PostDetailActivity : AppCompatActivity() {
 
         initVars()
 
-
-
+        loggedInUser = intent.getStringExtra("logged_user")!!
         val img = intent.getStringExtra("imagePost")
         Picasso.get().load(img).into(imagePost)
         val description = intent.getStringExtra("description")
@@ -49,6 +52,11 @@ class PostDetailActivity : AppCompatActivity() {
         val username = intent.getStringExtra("username")
         postUsername.text = username
         PostKey = intent.getStringExtra("PostKey").toString()
+        status.text = intent.getStringExtra("status")
+
+        if(loggedInUser != username) {
+            btnEdit.visibility = View.INVISIBLE
+        }
 
         initRc()
 
@@ -101,13 +109,15 @@ class PostDetailActivity : AppCompatActivity() {
         imageUser.setImageResource(R.drawable.ic_baseline_account_circle_24)
         firebaseDatabase = FirebaseDatabase.getInstance(databaseRegionURL).getReference("comments")
         recyclerView = findViewById(R.id.rv_comments)
+        btnEdit = findViewById(R.id.btn_edit)
+        status = findViewById(R.id.et_status)
     }
 
     private fun dodajKomentar() {
         val id = firebaseDatabase.push().key!!
         val comment = Comment(
             postComment.text.toString(),
-            postUsername.text.toString()
+            loggedInUser
         )
         firebaseDatabase.child(PostKey).child(id).setValue(comment)
             .addOnSuccessListener {

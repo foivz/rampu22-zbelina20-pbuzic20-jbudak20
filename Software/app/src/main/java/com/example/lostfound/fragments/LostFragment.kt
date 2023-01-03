@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lostfound.CreateActivity
 import com.example.lostfound.PostDetailActivity
+import com.example.lostfound.PostsActivity
 import com.example.lostfound.R
 import com.example.lostfound.adapters.PostAdapter
 import com.example.lostfound.databinding.FragmentLostBinding
 import com.example.lostfound.entities.Post
+import com.example.lostfound.entities.User
 import com.google.firebase.database.*
 
 
@@ -24,6 +26,7 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
     private lateinit var recyclerView : RecyclerView
     private lateinit var postAdapter: PostAdapter
     private lateinit var posts : MutableList<Post>
+    private lateinit var loggedInUser : User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +34,12 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
     ): View {
         val bind = FragmentLostBinding.inflate(layoutInflater)
 
+        loggedInUser = (activity as PostsActivity).user
+        Log.i("LOGGED_USER", loggedInUser.username.toString())
+
         bind.fabCreatePost.setOnClickListener{
             val intent = Intent(this@LostFragment.requireContext(), CreateActivity::class.java)
+            intent.putExtra("user", loggedInUser)
             startActivity(intent)
         }
 
@@ -73,6 +80,8 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
         intent.putExtra("description", post.text)
         intent.putExtra("imagePost", post.photo.toString())
         intent.putExtra("PostKey", post.id)
+        intent.putExtra("logged_user", loggedInUser.username.toString())
+        intent.putExtra("status", post.status)
         startActivity(intent)
     }
 }

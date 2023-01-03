@@ -3,7 +3,6 @@ package com.example.lostfound
 import android.os.Build.VERSION
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
 import com.example.lostfound.adapters.MainPagerAdapter
 import com.example.lostfound.databinding.ActivityPostsBinding
@@ -15,7 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class PostsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityPostsBinding
-    private lateinit var user : User
+    lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val mainPagerAdapter = MainPagerAdapter(supportFragmentManager, lifecycle)
@@ -27,8 +26,6 @@ class PostsActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra<User>("user") as User
         }
-
-        //Log.i("PARCEL_USER", user.username.toString())
 
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
