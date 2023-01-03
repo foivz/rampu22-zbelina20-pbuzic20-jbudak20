@@ -1,10 +1,13 @@
 package com.example.lostfound
 
+import android.os.Build.VERSION
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
 import com.example.lostfound.adapters.MainPagerAdapter
 import com.example.lostfound.databinding.ActivityPostsBinding
+import com.example.lostfound.entities.User
 import com.example.lostfound.fragments.FoundFragment
 import com.example.lostfound.fragments.LostFragment
 import com.google.android.material.tabs.TabLayout
@@ -12,8 +15,20 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class PostsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityPostsBinding
+    private lateinit var user : User
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val mainPagerAdapter = MainPagerAdapter(supportFragmentManager, lifecycle)
+
+        user = if(VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra("user", User::class.java) as User
+        }
+        else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra<User>("user") as User
+        }
+
+        //Log.i("PARCEL_USER", user.username.toString())
 
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
