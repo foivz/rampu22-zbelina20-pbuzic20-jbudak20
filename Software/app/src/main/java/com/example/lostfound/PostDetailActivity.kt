@@ -21,11 +21,12 @@ import kotlinx.android.synthetic.main.activity_post_detail.*
 class PostDetailActivity : AppCompatActivity() {
     private lateinit var imagePost : ImageView
     private lateinit var imageUser : ImageView
+    lateinit var imagePath : String
     private lateinit var postTitle : TextView
     private lateinit var postDescription: TextView
     private lateinit var postComment: EditText
     private lateinit var btnAddComment: Button
-    private lateinit var postUsername : TextView
+    lateinit var postUsername : TextView
     private lateinit var firebaseDatabase : DatabaseReference
     lateinit var PostKey : String
     private lateinit var recyclerView : RecyclerView
@@ -45,6 +46,7 @@ class PostDetailActivity : AppCompatActivity() {
 
         loggedInUser = intent.getStringExtra("logged_user")!!
         val img = intent.getStringExtra("imagePost")
+        imagePath = intent.getStringExtra("imagePost").toString()
         Picasso.get().load(img).into(imagePost)
         val description = intent.getStringExtra("description")
         postDescription.text = description
