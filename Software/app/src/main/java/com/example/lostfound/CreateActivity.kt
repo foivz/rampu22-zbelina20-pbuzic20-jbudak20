@@ -94,6 +94,7 @@ class CreateActivity : AppCompatActivity() {
             Toast.makeText(this, "Niste unijeli sliku izgubljene stvari", Toast.LENGTH_SHORT).show()
             return false
         }
+
         if(binding.etDescription.text.isBlank()){
             Toast.makeText(this, "Niste unijeli opis izgubljene stvari", Toast.LENGTH_SHORT).show()
             return false
@@ -109,6 +110,7 @@ class CreateActivity : AppCompatActivity() {
         if(result.resultCode == RESULT_OK){
             imageUri = result.data?.data
             val imageData = result.data?.data
+            binding.ivPicture.setImageURI(imageUri)
             val imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
             imageName.putFile(imageData).addOnSuccessListener {
                 imageName.downloadUrl.addOnSuccessListener { uri ->
