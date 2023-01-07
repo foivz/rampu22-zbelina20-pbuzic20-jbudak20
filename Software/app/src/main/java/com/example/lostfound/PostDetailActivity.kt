@@ -44,6 +44,7 @@ class PostDetailActivity : AppCompatActivity() {
 
         initVars()
 
+        //Ovdje dohvaćamo vrijednosti koje su nam proslijeđene iz PostsActivity, odnosno dohvaća se selektirana objava
         loggedInUser = intent.getStringExtra("logged_user")!!
         val img = intent.getStringExtra("imagePost")
         imagePath = intent.getStringExtra("imagePost").toString()
@@ -75,6 +76,8 @@ class PostDetailActivity : AppCompatActivity() {
         }
     }
 
+    //Ova funkcija služi nam da nam dohvati sve komentare koji se nalaze u bazi pod 'comments' te ih proslijeđuje adapteru
+    // koji onda  povezuje dohvaćene podatke s layoutom, odnosno recyclerViewom u ovom slučaju
     private fun initRc() {
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         val commentRef : DatabaseReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference("comments").child(PostKey)
@@ -98,6 +101,7 @@ class PostDetailActivity : AppCompatActivity() {
         })
     }
 
+    //Funkcija koja provjerava unos, odnosno je li korisnik upisao što pod komentar ili je ostavio prazno
     private fun provjeriUnos(): Boolean {
         if(postComment.text.isEmpty()){
             Toast.makeText(this, "Niste unijeli komentar", Toast.LENGTH_SHORT).show()
@@ -106,6 +110,8 @@ class PostDetailActivity : AppCompatActivity() {
         return true
     }
 
+    //Funkcija koja služi za inicijalizaciju varijabli koje su navedene gore pod lateinit var
+    // Tu se zapravo dohvaćaju svi elementi s layouta kako bismo mogli dalje raditi s njima
     private fun initVars() {
         imagePost = findViewById(R.id.iv_postDetail)
         postTitle = findViewById(R.id.post_detail_title)
@@ -121,6 +127,8 @@ class PostDetailActivity : AppCompatActivity() {
         status = findViewById(R.id.et_status)
     }
 
+    //Funkcija za dodavanje komentara, kao id se dodaje nasumični ključ kako bi svaki komentar imao različiti ključ
+    //U bazu se komentari ubacuju pod comments -> ključ -> tekst i korisnik koji je unio komentar
     private fun dodajKomentar() {
         val id = firebaseDatabase.push().key!!
         val comment = Comment(

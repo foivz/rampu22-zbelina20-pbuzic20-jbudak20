@@ -34,9 +34,11 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
     ): View {
         val bind = FragmentLostBinding.inflate(layoutInflater)
 
+        //Dohvaća se prijavljen korisnik
         loggedInUser = (activity as PostsActivity).user
         Log.i("LOGGED_USER", loggedInUser.username.toString())
 
+        //Floating action button, klikom na njega otvara se CreateActivity
         bind.fabCreatePost.setOnClickListener{
             val intent = Intent(this@LostFragment.requireContext(), CreateActivity::class.java)
             intent.putExtra("user", loggedInUser)
@@ -52,6 +54,9 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
         loadPost()
     }
 
+    //Funkcija koja dohvaća sve objave iz baze
+    //Dodaje se instanca te referenca u bazi na posts
+    //Za povezivanje dohvaćenih podataka s layoutom koristi se PostAdapter
     private fun loadPost(){
         dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts")
         dbRef.addValueEventListener(object : ValueEventListener {
@@ -73,6 +78,9 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
         })
     }
 
+    //Funkcija koja se koristi kako bi se dohvatio selektirana objava
+    //Korisnik kada klikne na objavu vodi ga na aktivnost PostDetail
+    //U intentu se dodaje podaci o objavi
     override fun clickedItem(post: Post) {
         val intent = Intent(this@LostFragment.requireContext(), PostDetailActivity::class.java)
         intent.putExtra("username", post.username)

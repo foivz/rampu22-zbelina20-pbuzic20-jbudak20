@@ -12,6 +12,8 @@ import com.example.lostfound.R
 import com.example.lostfound.entities.Post
 import com.squareup.picasso.Picasso
 
+//Adapter koji služi za upravljanje prikazom objava
+//U konstruktoru ima i clickListener zbog toga jer se želi dohvatiti selektiran abjava
 class PostAdapter(private var clickListener: ClickListener, private var listPosts : MutableList<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     private lateinit var context: Context
     //private var listPosts : List<Post> = arrayListOf()
@@ -22,6 +24,8 @@ class PostAdapter(private var clickListener: ClickListener, private var listPost
         return PostViewHolder(postview)
     }
 
+    //Funkcija koja nam preko svojstva holder pravilno prikazuje dohvaćene podatke
+    //Ovisno o atributu position prikazuje se određena objava tj. određeno svojstvo objave (naslov, opis...)
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = listPosts.get(position)
         holder.title.text = listPosts[position].title
@@ -39,8 +43,10 @@ class PostAdapter(private var clickListener: ClickListener, private var listPost
         fun clickedItem(post : Post)
     }
 
+    //Vraća broj objava
     override fun getItemCount(): Int = listPosts.size
 
+    //Kreiranje varijabli i povezivanje istih s pogledom.
     class PostViewHolder(view: View): RecyclerView.ViewHolder(view){
         val username : TextView
         val text : TextView

@@ -40,6 +40,7 @@ class CreateActivity : AppCompatActivity() {
 
         binding = ActivityCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Postavljanje username na korisnićko ime od logiranog korisnika
         username = user.username.toString()
 
 
@@ -47,6 +48,7 @@ class CreateActivity : AppCompatActivity() {
         registerClickEvents()
     }
 
+    //Postavljanje instance na Firebase storage i referencu na bazu gdje će se spremati objave
     private fun initVars() {
         storage = FirebaseStorage.getInstance().reference
         databaseReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts")
@@ -57,12 +59,19 @@ class CreateActivity : AppCompatActivity() {
             finish()
         }
 
+        //Metoda koja se aktivira kada korisnik klikne na gumb 'Add picture', definira tip 'Image' i poziva funkciju
+        // launch(intent)
         binding.btnAddPicture.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             pickImage.launch(intent)
         }
 
+        //Metoda koja je zaslužna da sprema objavu u bazu
+        //Provjerava se unos da bismo vidjeli je li sve uspješno unešeno
+        //Kod kreirenja objave također se stavlja ključ tako da svaka objava ima različiti ključ
+        //System.currentTimeMillis predstavlja trenutno vrijeme u milisekundama, to se koristi kako bismo vidjeli
+        // kada je objava kreirana
         binding.btnSubmit.setOnClickListener {
             if(provjeriUnos()) {
                 val id = databaseReference.push().key!!
@@ -89,6 +98,7 @@ class CreateActivity : AppCompatActivity() {
 
     }
 
+    //Funkcija koja provjerava jesu li ispravno unesene sve vrijednosti
     private fun provjeriUnos() : Boolean {
         if(imageUri == null){
             Toast.makeText(this, "Niste unijeli sliku izgubljene stvari", Toast.LENGTH_SHORT).show()
@@ -106,6 +116,9 @@ class CreateActivity : AppCompatActivity() {
         return true
     }
 
+    //Funkcija koja sprema sliku u firebase storage
+    //Sve slike se spremaju u folder '/images' gdje onda svaka slika ima svoj naziv
+    //imageUri sadrži URI od slike
     val pickImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if(result.resultCode == RESULT_OK){
             imageUri = result.data?.data
@@ -114,9 +127,7 @@ class CreateActivity : AppCompatActivity() {
             val imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
             imageName.putFile(imageData).addOnSuccessListener {
                 imageName.downloadUrl.addOnSuccessListener { uri ->
-                    val hashMap: HashMap<String, String> = HashMap()
                     adresaSlike = uri.toString()
-                    hashMap["photo"] = uri.toString()
                 }.addOnFailureListener {
                     Toast.makeText(this, "Objava nije stavljena", Toast.LENGTH_SHORT).show()
                 }
