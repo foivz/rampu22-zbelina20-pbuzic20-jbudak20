@@ -17,8 +17,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etPassword : EditText
     private lateinit var btnLogin : Button
 
+    //Koristi se referenca na bazu podataka za pristup njezinim podacima
     private lateinit var dbRef : DatabaseReference
     private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
+
     lateinit var usersList: MutableList<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +41,9 @@ class LoginActivity : AppCompatActivity() {
             val isLoginSuccessful = loginUser()
             if(isLoginSuccessful) {
 
+                //Ukoliko je korisnik uspješno ulogiran, korisnika se prosljeđuje na "PostsActivity"
+                //Također, prosljeđuje se i cijeli objekt tipa "User" kako bi dalje u aplikaciji znali
+                //koji korisnik je ulogiran i koristi aplikaciju
                 val user = getUser(etUsername.text.toString())
                 val intent = Intent(this, PostsActivity::class.java)
                 intent.putExtra("user", user)
@@ -54,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.w("DBError", "Neuspješno čitanje podataka: ", error.toException())
             }
 
+            //Popunjava se lista "usersList" sa korisnicima koji su upisani u bazi podataka
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()) {
                     for(u in snapshot.children) {
@@ -64,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-
+        //Prosljeđuje se korisnika na registraciju
         val btnRegister = findViewById<Button>(R.id.btn_Register)
         btnRegister.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
@@ -72,6 +78,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    //Provjera jesu li uneseni svi potrebni podaci, i , ako jesu, validiraju se sa "validateData"
     private fun loginUser() : Boolean {
         val username = etUsername.text.toString()
         val password = etPassword.text.toString()
@@ -88,6 +95,8 @@ class LoginActivity : AppCompatActivity() {
         return false
     }
 
+    //Provjera jesu li uneseni podaci ispravni, odnosno, postoji li korisnik sa unesenim korisničkim
+    //imenom i lozinkom
     private fun validateData(username : String, password : String) : Boolean {
         for(user in usersList) {
             if(user.username == username && user.password == password) {
@@ -98,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
         return false
     }
 
+    //Dohvaća korisnika iz liste svih korisnika prema korisničkom imenu
     private fun getUser(username : String) : User {
         for(user in usersList) {
             if(user.username == username) {

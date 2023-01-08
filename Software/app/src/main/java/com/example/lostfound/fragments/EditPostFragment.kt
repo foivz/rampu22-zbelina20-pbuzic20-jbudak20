@@ -30,24 +30,31 @@ class EditPostFragment : DialogFragment() {
     ): View {
         val rootView : View = inflater.inflate(R.layout.fragment_edit_post, container, false)
 
+        //Dohvaćanje potrebnih podataka iz prethodne aktivnosti
         postID = (activity as PostDetailActivity).PostKey
         username = (activity as PostDetailActivity).postUsername.text.toString()
         imagePath = (activity as PostDetailActivity).imagePath
 
+        //Ako korisnik odustane, pokreće se dismiss()
         rootView.btn_cancel.setOnClickListener {
             dismiss()
         }
 
+        //Pozivanje funckije za brisanje
         rootView.btn_delete.setOnClickListener {
             deletePost(postID)
         }
 
         rootView.btn_save.setOnClickListener {
+
+            //Dohvaćanje unesenih podataka
             val title = et_title.text.toString()
             val desc = et_description.text.toString()
             val radioGroup : RadioGroup = rootView.findViewById(R.id.rg_statuses)
             val selectedRadioButtonId : Int = radioGroup.checkedRadioButtonId
-            if(selectedRadioButtonId != -1) {
+
+            //Ako su uneseni svi podaci, tada se objava izmjenjuje
+            if(selectedRadioButtonId != -1 && !title.isBlank() && !desc.isBlank()) {
                 val selectedRadioButton : RadioButton = rootView.findViewById(selectedRadioButtonId)
                 val status = selectedRadioButton.text.toString()
                 editPost(title,desc,status)
@@ -64,7 +71,9 @@ class EditPostFragment : DialogFragment() {
 
     private fun deletePost(postID : String) {
 
+        //Dohvaća se referenca na bazu podataka, na tablicu "posts" unutar baze, na element sa ID-om "postID" unutar te tablice
         val dbReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts").child(postID)
+        //Brisanje elementa
         val remove = dbReference.removeValue()
 
         remove.addOnSuccessListener {
@@ -78,15 +87,11 @@ class EditPostFragment : DialogFragment() {
 
     private fun editPost(title : String, desc : String, status : String) {
 
+        //Dohvaća se referenca na bazu podataka, na tablicu "posts" unutar baze, na element sa ID-om "postID" unutar te tablice
          val dbReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts").child(postID)
+        //Kreira se novi objekt tipa "Post" sa unesenim podaicma
          val editedPost = Post(postID, title, System.currentTimeMillis(), username, desc, imagePath, status)
+        //Kreirani objekt se zapisuje u bazu točnije. overwrite-a objavu sa postojećim ID-om
          dbReference.setValue(editedPost)
-    }
-
-    private fun dataIsValid(title : String, desc : String) : Boolean {
-        if(title.isBlank() || desc.isBlank()) {
-            return false
-        }
-        return true
     }
 }
