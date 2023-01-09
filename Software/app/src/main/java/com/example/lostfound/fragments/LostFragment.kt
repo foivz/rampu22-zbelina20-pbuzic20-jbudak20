@@ -1,11 +1,18 @@
 package com.example.lostfound.fragments
 
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.EditText
+import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lostfound.CreateActivity
@@ -17,6 +24,7 @@ import com.example.lostfound.databinding.FragmentLostBinding
 import com.example.lostfound.entities.Post
 import com.example.lostfound.entities.User
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.post_feed.*
 
 
 class LostFragment : Fragment(), PostAdapter.ClickListener {
@@ -26,6 +34,7 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
     private lateinit var recyclerView : RecyclerView
     private lateinit var postAdapter: PostAdapter
     private lateinit var posts : MutableList<Post>
+    var searchPosts : ArrayList<Post> = ArrayList()
     private lateinit var loggedInUser : User
 
     override fun onCreateView(
@@ -45,6 +54,12 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
             startActivity(intent)
         }
 
+        //klik na gumb fabFilter poziva se funkcija filtriranje pomoću koje se izvršava
+        // filtriranje objava po odabranom kriteriju
+        bind.fabFilter.setOnClickListener{
+            filtriranje()
+        }
+
         return bind.root
     }
 
@@ -52,6 +67,9 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
         recyclerView = view.findViewById(R.id.rvPosts)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         loadPost()
+
+        super.onViewCreated(view, savedInstanceState)
+        setupMenu()
     }
 
     //Funkcija koja dohvaća sve objave iz baze
@@ -71,7 +89,8 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
                         val post = p.getValue(Post::class.java)
                         posts.add(post!!)
                     }
-                    postAdapter = PostAdapter(this@LostFragment, posts)
+                    searchPosts.addAll(posts)
+                    postAdapter = PostAdapter(this@LostFragment, searchPosts)
                     recyclerView.adapter = postAdapter
                 }
             } //dohvat podataka
@@ -91,5 +110,83 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
         intent.putExtra("logged_user", loggedInUser.username.toString())
         intent.putExtra("status", post.status)
         startActivity(intent)
+    }
+
+    private fun setupMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onPrepareMenu(menu: Menu) {
+                // Handle for example visibility of menu items
+            }
+
+            //inflateanje menu stavki unutar menu-a i pretraživanje objava
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.main_menu, menu)
+                val searchItem = menu.findItem(R.id.search)
+                val searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
+                val searchText= searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+                searchText.hint = "Upišite naslov objave..."
+
+                //listener za korisnikove radnje unutar searchViewa
+                searchView.setOnQueryTextListener(object: androidx.appcompat.widget.SearchView.OnQueryTextListener{
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return true
+                    }
+
+                    //funkcija koja se poziva kada se promijeni tekst koji korisnik upiše
+                    // te se u skladu s time mijenjaju objave koje su prikazane
+                    @SuppressLint("NotifyDataSetChanged")
+                    override fun onQueryTextChange(newText: String?) : Boolean{
+                        if(newText!!.isNotEmpty())
+                        {
+                            searchPosts.clear()
+
+                            val search = newText.lowercase()
+                            posts.forEach {
+                                if(it.title?.lowercase()!!.contains(search))
+                                {
+                                    searchPosts.add(it)
+                                }
+                            }
+                            rvPosts.adapter?.notifyDataSetChanged()
+                        }
+                        else{
+                            searchPosts.clear()
+                            searchPosts.addAll(posts)
+                            rvPosts.adapter?.notifyDataSetChanged()
+                        }
+                        return true
+                    }
+                })
+            }
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Validate and handle the selected menu item
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    //funkcija pomoću koje se stvara dijalog sa svim potrebnim informacijama
+    //te se filtriraju objave
+    @SuppressLint("NotifyDataSetChanged")
+    private fun filtriranje() {
+        val stavke = arrayOf("Tehnologija", "Odjeća/Obuća", "Razno")
+        val builder = AlertDialog.Builder(requireActivity())
+        with(builder)
+        {
+            create()
+            setTitle("Filtriraj izgubljenu imovinu:")
+            setItems(stavke) { _, which ->
+                searchPosts.clear()
+                posts.forEach {
+                    if(it.vrstaImovine?.contains(stavke[which]) == true)
+                    {
+                        searchPosts.add(it)
+                    }
+                }
+                rvPosts.adapter?.notifyDataSetChanged()
+                Toast.makeText(requireActivity(), "Filtrirano po: " + stavke[which], Toast.LENGTH_SHORT).show()
+            }
+            show()
+        }
     }
 }

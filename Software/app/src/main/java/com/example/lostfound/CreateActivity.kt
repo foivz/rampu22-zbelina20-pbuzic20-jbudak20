@@ -5,6 +5,10 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.lostfound.databinding.ActivityCreateBinding
@@ -14,9 +18,20 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_post_detail.*
 
 
-class CreateActivity : AppCompatActivity() {
+class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        if (parent != null) {
+            vrstaImovine = parent.getItemAtPosition(position).toString()
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        vrstaImovine = "Razno"
+    }
+
     private lateinit var binding :  ActivityCreateBinding
     private var imageUri: Uri? = null
     private lateinit var storage: StorageReference
@@ -24,6 +39,7 @@ class CreateActivity : AppCompatActivity() {
     private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
     private lateinit var databaseReference : DatabaseReference
     private lateinit var adresaSlike: String
+    private lateinit var vrstaImovine: String
 
     private lateinit var user : User
 
@@ -43,6 +59,16 @@ class CreateActivity : AppCompatActivity() {
         //Postavljanje username na korisnićko ime od logiranog korisnika
         username = user.username.toString()
 
+        val spinner: Spinner = findViewById(R.id.s_VrstaImovine)
+        spinner.onItemSelectedListener = this
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.property_type,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
 
         initVars()
         registerClickEvents()
@@ -75,13 +101,15 @@ class CreateActivity : AppCompatActivity() {
         binding.btnSubmit.setOnClickListener {
             if(provjeriUnos()) {
                 val id = databaseReference.push().key!!
+
                 val post = Post(
                     id,
                     binding.etTitle.text.toString(),
                     System.currentTimeMillis(),
                     username,
                     binding.etDescription.text.toString(),
-                    adresaSlike
+                    adresaSlike,
+                    vrstaImovine = this.vrstaImovine
                 )
                 databaseReference.child(id).setValue(post)
                     .addOnSuccessListener {
