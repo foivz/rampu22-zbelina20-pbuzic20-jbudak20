@@ -51,6 +51,8 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
         bind.fabCreatePost.setOnClickListener{
             val intent = Intent(this@LostFragment.requireContext(), CreateActivity::class.java)
             intent.putExtra("user", loggedInUser)
+            intent.putExtra("status", "izgubljeno")
+            intent.putExtra("posts", "posts")
             startActivity(intent)
         }
 

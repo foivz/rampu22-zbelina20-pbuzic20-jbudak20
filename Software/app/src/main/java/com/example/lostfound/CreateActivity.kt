@@ -39,6 +39,8 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var databaseReference : DatabaseReference
     private lateinit var adresaSlike: String
     private lateinit var vrstaImovine: String
+    private lateinit var status: String
+    private lateinit var foundOrLost : String
 
     private lateinit var user : User
 
@@ -52,7 +54,8 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra<User>("user") as User
         }
-
+        foundOrLost = intent.getStringExtra("posts").toString()
+        status = intent.getStringExtra("status").toString()
         binding = ActivityCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //Postavljanje username na korisnićko ime od logiranog korisnika
@@ -76,7 +79,7 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     //Postavljanje instance na Firebase storage i referencu na bazu gdje će se spremati objave
     private fun initVars() {
         storage = FirebaseStorage.getInstance().reference
-        databaseReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts")
+        databaseReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference(foundOrLost)
     }
 
     private fun registerClickEvents() {
@@ -116,6 +119,7 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             username,
             binding.etDescription.text.toString(),
             adresaSlike,
+            status,
             vrstaImovine = this.vrstaImovine
         )
         databaseReference.child(id).setValue(post)

@@ -35,6 +35,7 @@ class EditPostFragment : DialogFragment() {
         username = (activity as PostDetailActivity).postUsername.text.toString()
         imagePath = (activity as PostDetailActivity).imagePath
 
+
         //Ako korisnik odustane, pokreće se dismiss()
         rootView.btn_cancel.setOnClickListener {
             dismiss()
