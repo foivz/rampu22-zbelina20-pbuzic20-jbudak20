@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_post_detail.*
 
 
 class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -100,30 +99,55 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // kada je objava kreirana
         binding.btnSubmit.setOnClickListener {
             if(provjeriUnos()) {
-                val id = databaseReference.push().key!!
-
-                val post = Post(
-                    id,
-                    binding.etTitle.text.toString(),
-                    System.currentTimeMillis(),
-                    username,
-                    binding.etDescription.text.toString(),
-                    adresaSlike,
-                    vrstaImovine = this.vrstaImovine
-                )
-                databaseReference.child(id).setValue(post)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Unijet je novi post", Toast.LENGTH_SHORT).show()
-                        binding.etTitle.text.clear()
-                        binding.etDescription.text.clear()
-                        finish()
-                    }.addOnFailureListener{err ->
-                        Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
-                    }
+                dodajSliku()
             }
         }
 
 
+    }
+
+    private fun dodajObjavu() {
+        val id = databaseReference.push().key!!
+
+        val post = Post(
+            id,
+            binding.etTitle.text.toString(),
+            System.currentTimeMillis(),
+            username,
+            binding.etDescription.text.toString(),
+            adresaSlike,
+            vrstaImovine = this.vrstaImovine
+        )
+        databaseReference.child(id).setValue(post)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Unijet je novi post", Toast.LENGTH_SHORT).show()
+                binding.etTitle.text.clear()
+                binding.etDescription.text.clear()
+                finish()
+            }.addOnFailureListener{err ->
+                Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun dodajSliku(){
+        val imageData = imageUri
+        val imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
+            imageName.putFile(imageData).addOnSuccessListener {
+                imageName.downloadUrl.addOnSuccessListener { uri ->
+                    adresaSlike = uri.toString()
+                    dodajObjavu()
+                }
+            }
+       /* val imageData = imageUri
+        val imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
+        imageName.putFile(imageData).addOnSuccessListener {
+            imageName.downloadUrl.addOnSuccessListener { uri ->
+                adresaSlike = uri.toString()
+                Toast.makeText(this, adresaSlike, Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                Toast.makeText(this, "Objava nije stavljena", Toast.LENGTH_SHORT).show()
+            }
+        }*/
     }
 
     //Funkcija koja provjerava jesu li ispravno unesene sve vrijednosti
@@ -149,17 +173,8 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     //imageUri sadrži URI od slike
     val pickImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if(result.resultCode == RESULT_OK){
-            imageUri = result.data?.data
-            val imageData = result.data?.data
+            imageUri = result.data?.data!!
             binding.ivPicture.setImageURI(imageUri)
-            val imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
-            imageName.putFile(imageData).addOnSuccessListener {
-                imageName.downloadUrl.addOnSuccessListener { uri ->
-                    adresaSlike = uri.toString()
-                }.addOnFailureListener {
-                    Toast.makeText(this, "Objava nije stavljena", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
     }
 }

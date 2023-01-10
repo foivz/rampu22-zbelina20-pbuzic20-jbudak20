@@ -90,7 +90,7 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
                         posts.add(post!!)
                     }
                     searchPosts.addAll(posts)
-                    postAdapter = PostAdapter(this@LostFragment, searchPosts)
+                    postAdapter = PostAdapter(this@LostFragment, posts)
                     recyclerView.adapter = postAdapter
                 }
             } //dohvat podataka
