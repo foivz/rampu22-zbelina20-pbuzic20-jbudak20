@@ -11,6 +11,7 @@ import com.example.lostfound.fragments.FoundFragment
 import com.example.lostfound.fragments.LostFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.messaging.FirebaseMessaging
 
 class PostsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityPostsBinding
@@ -18,6 +19,8 @@ class PostsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val mainPagerAdapter = MainPagerAdapter(supportFragmentManager, lifecycle)
+        val firebaseMessaging = FirebaseMessaging.getInstance()
+        firebaseMessaging.subscribeToTopic("new_posts")
 
         user = if(VERSION.SDK_INT >= 33) {
             intent.getParcelableExtra("user", User::class.java) as User

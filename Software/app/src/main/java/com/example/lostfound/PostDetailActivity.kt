@@ -33,7 +33,7 @@ class PostDetailActivity : AppCompatActivity() {
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var comments : MutableList<Comment>
     private lateinit var btnEdit : Button
-    private lateinit var status : TextView
+    lateinit var status : TextView
     private lateinit var loggedInUser : String
     private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
 
@@ -71,7 +71,7 @@ class PostDetailActivity : AppCompatActivity() {
         }
 
         btnEdit.setOnClickListener {
-            var editFragment = EditPostFragment()
+            val editFragment = EditPostFragment()
             editFragment.show(supportFragmentManager,"editFragment")
         }
     }

@@ -22,6 +22,7 @@ class EditPostFragment : DialogFragment() {
     private lateinit var postID : String
     private lateinit var username : String
     private lateinit var imagePath : String
+    private lateinit var status: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +35,8 @@ class EditPostFragment : DialogFragment() {
         postID = (activity as PostDetailActivity).PostKey
         username = (activity as PostDetailActivity).postUsername.text.toString()
         imagePath = (activity as PostDetailActivity).imagePath
+        status = (activity as PostDetailActivity).status.toString()
+
 
 
         //Ako korisnik odustane, pokreće se dismiss()
@@ -70,10 +73,20 @@ class EditPostFragment : DialogFragment() {
         return rootView
     }
 
-    private fun deletePost(postID : String) {
+    private fun provjeriStatus(status: String) : String {
+        if(status == "izgubljeno"){
+            return "posts"
+        }else if(status == "pronadeno"){
+            return "postsFound"
+        }
+        else
+            return "posts"
+    }
 
+    private fun deletePost(postID : String) {
+        val provjera = provjeriStatus(status)
         //Dohvaća se referenca na bazu podataka, na tablicu "posts" unutar baze, na element sa ID-om "postID" unutar te tablice
-        val dbReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts").child(postID)
+        val dbReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference(provjera).child(postID)
         //Brisanje elementa
         val remove = dbReference.removeValue()
 
@@ -87,9 +100,9 @@ class EditPostFragment : DialogFragment() {
     }
 
     private fun editPost(title : String, desc : String, status : String) {
-
+        val provjera = provjeriStatus(status)
         //Dohvaća se referenca na bazu podataka, na tablicu "posts" unutar baze, na element sa ID-om "postID" unutar te tablice
-         val dbReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts").child(postID)
+         val dbReference = FirebaseDatabase.getInstance(databaseRegionURL).getReference(provjera).child(postID)
         //Kreira se novi objekt tipa "Post" sa unesenim podaicma
          val editedPost = Post(postID, title, System.currentTimeMillis(), username, desc, imagePath, status)
         //Kreirani objekt se zapisuje u bazu točnije. overwrite-a objavu sa postojećim ID-om
