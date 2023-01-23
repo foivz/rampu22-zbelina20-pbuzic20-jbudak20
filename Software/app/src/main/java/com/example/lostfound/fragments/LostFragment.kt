@@ -24,7 +24,6 @@ import com.example.lostfound.databinding.FragmentLostBinding
 import com.example.lostfound.entities.Post
 import com.example.lostfound.entities.User
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.post_feed.*
 
 
 class LostFragment : Fragment(), PostAdapter.ClickListener {
@@ -34,7 +33,6 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
     private lateinit var recyclerView : RecyclerView
     private lateinit var postAdapter: PostAdapter
     private lateinit var posts : MutableList<Post>
-    var searchPosts : ArrayList<Post> = ArrayList()
     private lateinit var loggedInUser : User
 
     override fun onCreateView(
@@ -91,7 +89,6 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
                         val post = p.getValue(Post::class.java)
                         posts.add(post!!)
                     }
-                    searchPosts.addAll(posts)
                     postAdapter = PostAdapter(this@LostFragment, posts)
                     recyclerView.adapter = postAdapter
                 }
@@ -138,24 +135,15 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
                     // te se u skladu s time mijenjaju objave koje su prikazane
                     @SuppressLint("NotifyDataSetChanged")
                     override fun onQueryTextChange(newText: String?) : Boolean{
-                        if(newText!!.isNotEmpty())
-                        {
-                            searchPosts.clear()
-
-                            val search = newText.lowercase()
+                            val searchList : ArrayList<Post> = ArrayList()
+                            val search = newText?.lowercase().toString()
                             posts.forEach {
                                 if(it.title?.lowercase()!!.contains(search))
                                 {
-                                    searchPosts.add(it)
+                                    searchList.add(it)
                                 }
                             }
-                            rvPosts.adapter?.notifyDataSetChanged()
-                        }
-                        else{
-                            searchPosts.clear()
-                            searchPosts.addAll(posts)
-                            rvPosts.adapter?.notifyDataSetChanged()
-                        }
+                            postAdapter.searchData(searchList)
                         return true
                     }
                 })
@@ -178,16 +166,20 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
             create()
             setTitle("Filtriraj izgubljenu imovinu:")
             setItems(stavke) { _, which ->
-                searchPosts.clear()
+                val filterPosts : ArrayList<Post> = ArrayList()
                 posts.forEach {
                     if(it.vrstaImovine?.contains(stavke[which]) == true)
                     {
-                        searchPosts.add(it)
+                        filterPosts.add(it)
                     }
                 }
-                rvPosts.adapter?.notifyDataSetChanged()
+                postAdapter.searchData(filterPosts)
                 Toast.makeText(requireActivity(), "Filtrirano po: " + stavke[which], Toast.LENGTH_SHORT).show()
             }
+                .setPositiveButton("Poništi filter") {_, _ ->
+                    postAdapter.searchData(posts)
+                    Toast.makeText(requireActivity(), "Filter poništen", Toast.LENGTH_SHORT).show()
+                }
             show()
         }
     }

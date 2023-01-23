@@ -63,4 +63,9 @@ class PostAdapter(private var clickListener: ClickListener, private var listPost
         }
     }
 
+    fun searchData(searchPost: MutableList<Post>){
+        listPosts = searchPost
+        notifyDataSetChanged()
+    }
+
 }
