@@ -51,7 +51,7 @@ class FoundFragment : Fragment(), PostAdapter.ClickListener {
         }
 
         binding.fabFilterFoundPost.setOnClickListener{
-            filtriranje()
+            filterpretrazivanje("filtriranje", "")
         }
 
         return binding.root
@@ -123,15 +123,7 @@ class FoundFragment : Fragment(), PostAdapter.ClickListener {
                     // te se u skladu s time mijenjaju objave koje su prikazane
                     @SuppressLint("NotifyDataSetChanged")
                     override fun onQueryTextChange(newText: String?) : Boolean{
-                            val searchPost : ArrayList<Post> = ArrayList()
-                            val search = newText?.lowercase().toString()
-                            posts.forEach {
-                                if(it.title?.lowercase()!!.contains(search))
-                                {
-                                    searchPost.add(it)
-                                }
-                            }
-                            postAdapter.searchData(searchPost)
+                        filterpretrazivanje("pretrazivanje", newText)
                         return true
                     }
                 })
@@ -143,31 +135,63 @@ class FoundFragment : Fragment(), PostAdapter.ClickListener {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun filtriranje() {
-        val stavke = arrayOf("Tehnologija", "Odjeća/Obuća", "Razno")
-        val builder = AlertDialog.Builder(requireActivity())
-        with(builder)
-        {
-            create()
-            setTitle("Filtriraj izgubljenu imovinu:")
-            setItems(stavke) { _, which ->
-                val filterPosts : ArrayList<Post> = ArrayList()
-                posts.forEach {
-                    if(it.vrstaImovine?.contains(stavke[which]) == true)
-                    {
-                        filterPosts.add(it)
+    private fun filterpretrazivanje(s: String, newText: String?) {
+        if(s == "pretrazivanje"){
+            if(newText.isNullOrEmpty()){
+                postAdapter.searchData(posts) //prikazivanje svih objavu kada je unos pretraživanja prazan
+                return
+            }
+
+
+            dbRef.orderByChild("title").addValueEventListener(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val searchPost = ArrayList<Post>()
+                        for (i in snapshot.children) {
+                            val post = i.getValue(Post::class.java)
+                            if(post?.title?.lowercase().toString().contains(newText.lowercase()))
+                            {
+                                searchPost.add(post!!)
+                            }
+                        }
+                        postAdapter.searchData(searchPost)
                     }
                 }
-                postAdapter.searchData(filterPosts)
-                Toast.makeText(requireActivity(), "Filtrirano po: " + stavke[which], Toast.LENGTH_SHORT).show()
-            }
-                .setPositiveButton("Poništi filter") {_, _ ->
-                    postAdapter.searchData(posts)
-                    Toast.makeText(requireActivity(), "Filter poništen", Toast.LENGTH_SHORT).show()
+
+                override fun onCancelled(error: DatabaseError) {
+
                 }
-            show()
+            })
+        }else if(s == "filtriranje"){
+            val stavke = arrayOf("Tehnologija", "Odjeća/Obuća", "Razno")
+            val builder = AlertDialog.Builder(requireActivity())
+            with(builder)
+            {
+                create()
+                setTitle("Filtriraj izgubljenu imovinu:")
+                setItems(stavke) { _, which ->
+                    dbRef.orderByChild("vrstaImovine").equalTo(stavke[which]).addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            val filterPosts: ArrayList<Post> = ArrayList()
+                            for (postSnapshot in dataSnapshot.children) {
+                                val post = postSnapshot.getValue(Post::class.java)
+                                filterPosts.add(post!!)
+                            }
+                            postAdapter.searchData(filterPosts)
+                            Toast.makeText(requireActivity(), "Filtrirano po: " + stavke[which], Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            // Failed to read value
+                        }
+                    })
+                }
+                    .setPositiveButton("Poništi filter") {_, _ ->
+                        postAdapter.searchData(posts)
+                        Toast.makeText(requireActivity(), "Filter poništen", Toast.LENGTH_SHORT).show()
+                    }
+                show()
+            }
         }
     }
-
 }
