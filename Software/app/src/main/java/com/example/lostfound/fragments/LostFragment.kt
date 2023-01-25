@@ -121,6 +121,8 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.main_menu, menu)
                 val searchItem = menu.findItem(R.id.search)
+                val btnBack = menu.findItem(R.id.btn_back)
+                btnBack.isVisible = false
                 val searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
                 val searchText= searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
                 searchText.hint = "Upišite naslov objave..."

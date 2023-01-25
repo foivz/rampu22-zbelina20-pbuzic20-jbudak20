@@ -3,6 +3,8 @@ package com.example.lostfound
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -108,6 +110,25 @@ class PostDetailActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val backButton = menu?.findItem(R.id.btn_back)
+        val searchItem = menu?.findItem(R.id.search)
+        backButton?.isVisible = true
+        searchItem?.isVisible = false
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.btn_back -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     //Funkcija koja služi za inicijalizaciju varijabli koje su navedene gore pod lateinit var
