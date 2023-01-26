@@ -16,6 +16,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etUsername : EditText
     private lateinit var etPassword : EditText
     private lateinit var btnLogin : Button
+    private lateinit var brojTelefona : String
 
     //Koristi se referenca na bazu podataka za pristup njezinim podacima
     private lateinit var dbRef : DatabaseReference

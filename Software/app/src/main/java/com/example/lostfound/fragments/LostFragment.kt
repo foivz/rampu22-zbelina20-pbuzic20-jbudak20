@@ -157,7 +157,7 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
             }
 
 
-            dbRef.orderByChild("title").addValueEventListener(object:ValueEventListener{
+            dbRef.orderByChild("title").addValueEventListener(object:ValueEventListener{ // QUERY za slanje u bazu
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val searchPost = ArrayList<Post>()

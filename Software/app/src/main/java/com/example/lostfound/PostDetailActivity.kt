@@ -1,5 +1,9 @@
 package com.example.lostfound
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +12,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lostfound.adapters.CommentAdapter
 import com.example.lostfound.entities.Comment
+import com.example.lostfound.entities.Post
+import com.example.lostfound.entities.User
 import com.example.lostfound.fragments.EditPostFragment
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
@@ -38,6 +46,9 @@ class PostDetailActivity : AppCompatActivity() {
     lateinit var status : TextView
     private lateinit var loggedInUser : String
     private val databaseRegionURL = "https://lostfound-c1e57-default-rtdb.europe-west1.firebasedatabase.app"
+    private lateinit var dbRef : DatabaseReference
+    private lateinit var gumbZvanje :ImageButton
+    private lateinit var brojTelefona :String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +56,7 @@ class PostDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_post_detail)
 
         initVars()
-
+        
         //Ovdje dohvaćamo vrijednosti koje su nam proslijeđene iz PostsActivity, odnosno dohvaća se selektirana objava
         loggedInUser = intent.getStringExtra("logged_user")!!
         val img = intent.getStringExtra("imagePost")
@@ -59,6 +70,8 @@ class PostDetailActivity : AppCompatActivity() {
         postUsername.text = username
         PostKey = intent.getStringExtra("PostKey").toString()
         status.text = intent.getStringExtra("status")
+
+        dohvatiBrojKorisnika(username)
 
         if(loggedInUser != username) {
             btnEdit.visibility = View.INVISIBLE
@@ -75,6 +88,43 @@ class PostDetailActivity : AppCompatActivity() {
         btnEdit.setOnClickListener {
             val editFragment = EditPostFragment()
             editFragment.show(supportFragmentManager,"editFragment")
+        }
+
+        gumbZvanje = findViewById<View>(R.id.imageButton_poziv) as ImageButton
+
+        gumbZvanje.setOnClickListener {
+            provjeriDozvoluZaPozive()
+
+            if(brojTelefona.isNotEmpty())
+            {
+                val callIntent = Intent(Intent.ACTION_CALL)
+                callIntent.data = Uri.parse("tel: $brojTelefona")
+                startActivity(callIntent)
+            }
+        }
+    }
+
+    private fun dohvatiBrojKorisnika(username: String?) {
+        dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("users")
+        dbRef.orderByChild("username").equalTo(username).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (userSnapshot in dataSnapshot.children) {
+                    val user = userSnapshot.getValue(User::class.java)
+                    if (user != null) {
+                        brojTelefona = user.phoneNumber.toString()
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+            }
+        })
+    }
+
+    private fun provjeriDozvoluZaPozive() { //provjeri dozvolu za pozive u aplikaciji
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), 101)
         }
     }
 
