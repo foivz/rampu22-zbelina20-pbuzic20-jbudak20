@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lostfound.adapters.CommentAdapter
 import com.example.lostfound.entities.Comment
-import com.example.lostfound.entities.Post
 import com.example.lostfound.entities.User
 import com.example.lostfound.fragments.EditPostFragment
 import com.google.firebase.database.*
@@ -54,7 +53,7 @@ class PostDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
-
+        provjeriDozvoluZaPozive()
         initVars()
         
         //Ovdje dohvaćamo vrijednosti koje su nam proslijeđene iz PostsActivity, odnosno dohvaća se selektirana objava
@@ -93,8 +92,6 @@ class PostDetailActivity : AppCompatActivity() {
         gumbZvanje = findViewById<View>(R.id.imageButton_poziv) as ImageButton
 
         gumbZvanje.setOnClickListener {
-            provjeriDozvoluZaPozive()
-
             if(brojTelefona.isNotEmpty())
             {
                 val callIntent = Intent(Intent.ACTION_CALL)
