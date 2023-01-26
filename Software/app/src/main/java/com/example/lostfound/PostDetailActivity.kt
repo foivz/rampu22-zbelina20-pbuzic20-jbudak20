@@ -204,7 +204,8 @@ class PostDetailActivity : AppCompatActivity() {
         val id = firebaseDatabase.push().key!!
         val comment = Comment(
             postComment.text.toString(),
-            loggedInUser
+            loggedInUser,
+            postTitle.text.toString()
         )
         firebaseDatabase.child(PostKey).child(id).setValue(comment)
             .addOnSuccessListener {

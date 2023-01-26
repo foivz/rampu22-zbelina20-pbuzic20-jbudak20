@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,6 +17,7 @@ import com.example.lostfound.entities.Post
 import com.example.lostfound.entities.User
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -46,6 +48,7 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         user = if(Build.VERSION.SDK_INT >= 33) {
             intent.getParcelableExtra("user", User::class.java) as User
@@ -122,8 +125,16 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             status,
             vrstaImovine = this.vrstaImovine
         )
+
         databaseReference.child(id).setValue(post)
             .addOnSuccessListener {
+                val topic = binding.etTitle.text.toString()
+                FirebaseMessaging.getInstance().subscribeToTopic(topic)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.d("FCM", "Successfully subscribed to topic: $topic")
+                        }
+                    }
                 Toast.makeText(this, "Unijet je novi post", Toast.LENGTH_SHORT).show()
                 binding.etTitle.text.clear()
                 binding.etDescription.text.clear()
@@ -135,7 +146,7 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun dodajSliku(){
         val imageData = imageUri
-        var imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
+        val imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
             imageName.putFile(imageData).addOnSuccessListener {
                 imageName.downloadUrl.addOnSuccessListener { uri ->
                     adresaSlike = uri.toString()
