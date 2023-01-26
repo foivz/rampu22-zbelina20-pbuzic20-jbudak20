@@ -15,9 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lostfound.CreateActivity
-import com.example.lostfound.PostDetailActivity
-import com.example.lostfound.PostsActivity
+import com.example.lostfound.*
 import com.example.lostfound.R
 import com.example.lostfound.adapters.PostAdapter
 import com.example.lostfound.databinding.FragmentLostBinding
@@ -122,6 +120,14 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
                 menuInflater.inflate(R.menu.main_menu, menu)
                 val searchItem = menu.findItem(R.id.search)
                 val btnBack = menu.findItem(R.id.btn_back)
+                val charts = menu.findItem(R.id.btn_charts)
+
+                charts.setOnMenuItemClickListener {
+                    val intent = Intent(this@LostFragment.requireContext(), ChartsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+
                 btnBack.isVisible = false
                 val searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
                 val searchText= searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)

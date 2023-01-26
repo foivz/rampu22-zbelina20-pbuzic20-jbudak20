@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/btn_charts"
+        android:title="Back"
+        android:icon="@drawable/ic_baseline_bar_chart_24"
+        app:showAsAction="always|collapseActionView" />
+    <item
         android:id="@+id/search"
         android:title="Search"
         android:icon="@drawable/ic_baseline_search_24"

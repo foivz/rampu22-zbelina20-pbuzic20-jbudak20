@@ -166,8 +166,11 @@ class PostDetailActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
         val backButton = menu?.findItem(R.id.btn_back)
         val searchItem = menu?.findItem(R.id.search)
+        val charts = menu?.findItem(R.id.btn_charts)
         backButton?.isVisible = true
         searchItem?.isVisible = false
+        charts?.isVisible = false
+
         return true
     }
 
