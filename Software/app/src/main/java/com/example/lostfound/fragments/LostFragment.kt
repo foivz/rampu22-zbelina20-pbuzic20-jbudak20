@@ -21,6 +21,7 @@ import com.example.lostfound.adapters.PostAdapter
 import com.example.lostfound.databinding.FragmentLostBinding
 import com.example.lostfound.entities.Post
 import com.example.lostfound.entities.User
+import com.example.lostfound.helpers.FirebaseService
 import com.google.firebase.database.*
 
 
@@ -123,6 +124,7 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
                 val charts = menu.findItem(R.id.btn_charts)
 
                 charts.setOnMenuItemClickListener {
+                    //val posts : MutableList<Post> = FirebaseService.getAllPosts()
                     val intent = Intent(this@LostFragment.requireContext(), ChartsActivity::class.java)
                     startActivity(intent)
                     true
