@@ -9,6 +9,8 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.lostfound.R.layout.activity_login
 import com.example.lostfound.entities.User
+import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.*
 
 class LoginActivity : AppCompatActivity() {
@@ -27,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(activity_login)
+        FirebaseApp.initializeApp(this)
+        FirebaseAnalytics.getInstance(this).setSessionTimeoutDuration(20000)
 
         supportActionBar?.hide()
 
