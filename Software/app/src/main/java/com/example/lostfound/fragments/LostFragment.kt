@@ -157,6 +157,8 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
+    //funkcija pomoću koje se stvara dijalog sa svim potrebnim informacijama
+    //te se filtriraju objave
     private fun filterpretrazivanje(s: String, newText: String?) {
         if(s == "pretrazivanje"){
             if(newText.isNullOrEmpty()){
@@ -210,13 +212,10 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
                 }
                     .setPositiveButton("Poništi filter") {_, _ ->
                         postAdapter.searchData(posts)
-                        Toast.makeText(requireActivity(), "Filter poništen", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), "Filter poništen!", Toast.LENGTH_SHORT).show()
                     }
                 show()
             }
         }
     }
-
-    //funkcija pomoću koje se stvara dijalog sa svim potrebnim informacijama
-    //te se filtriraju objave
 }

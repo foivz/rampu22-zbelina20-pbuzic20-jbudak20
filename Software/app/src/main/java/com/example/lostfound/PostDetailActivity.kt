@@ -92,15 +92,20 @@ class PostDetailActivity : AppCompatActivity() {
         gumbZvanje = findViewById<View>(R.id.imageButton_poziv) as ImageButton
 
         gumbZvanje.setOnClickListener {
-            if(brojTelefona.isNotEmpty())
+            if(brojTelefona.isNotEmpty() && ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
             {
                 val callIntent = Intent(Intent.ACTION_CALL)
                 callIntent.data = Uri.parse("tel: $brojTelefona")
                 startActivity(callIntent)
             }
+            else
+            {
+                Toast.makeText(this, "Broj telefona nije dostupan ili niste dali dopuštenje za pozive!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
+    //Dohvaćanje broja korisnika koji je vlasnik objave
     private fun dohvatiBrojKorisnika(username: String?) {
         dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("users")
         dbRef.orderByChild("username").equalTo(username).addValueEventListener(object : ValueEventListener {
@@ -119,7 +124,7 @@ class PostDetailActivity : AppCompatActivity() {
     }
 
     private fun provjeriDozvoluZaPozive() { //provjeri dozvolu za pozive u aplikaciji
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_DENIED)
         {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), 101)
         }
