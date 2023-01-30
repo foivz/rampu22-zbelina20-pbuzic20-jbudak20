@@ -4,6 +4,8 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import com.example.lostfound.entities.Post
 import com.example.lostfound.entities.PostSync
 import com.example.lostfound.helpers.FirebaseService
@@ -129,5 +131,27 @@ class ChartsActivity : AppCompatActivity(), PostSync {
         }
 
         return listOf(PieEntry(tehnologija.toFloat(), "Tehnologija"), PieEntry(odjeca.toFloat(), "Odjeca i obuca"), PieEntry(razno.toFloat(), "Razno"))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val backButton = menu?.findItem(R.id.btn_back)
+        val searchItem = menu?.findItem(R.id.search)
+        val charts = menu?.findItem(R.id.btn_charts)
+        backButton?.isVisible = true
+        searchItem?.isVisible = false
+        charts?.isVisible = false
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.btn_back -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
