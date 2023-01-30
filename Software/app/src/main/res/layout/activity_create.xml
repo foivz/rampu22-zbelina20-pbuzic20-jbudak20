@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/add_picture" />
+        android:text="@string/dodaj_sliku" />
 
     <ImageView
         android:id="@+id/iv_picture"
@@ -72,7 +72,7 @@
             android:layout_gravity="center"
             android:layout_margin="8dp"
             android:gravity="center"
-            android:text="@string/submit"
+            android:text="@string/dodaj_objavu"
             />
 
         <Button
@@ -82,7 +82,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="8dp"
-            android:text="@string/cancel"
+            android:text="@string/odustani"
             />
     </LinearLayout>
 

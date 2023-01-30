@@ -97,8 +97,8 @@
 
         <EditText
             android:id="@+id/post_detail_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="191dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:ems="10"
             android:hint="Write comment"
@@ -110,12 +110,13 @@
 
         <Button
             android:id="@+id/btn_post_detail_add"
-            android:layout_width="71dp"
-            android:layout_height="48dp"
+            android:layout_width="106dp"
+            android:layout_height="39dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Add"
+            android:text="Komentiraj"
+            android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/post_detail_comment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/post_detail_comment"
@@ -144,7 +145,7 @@
 
         <Button
             android:id="@+id/btn_edit"
-            android:text="EDIT"
+            android:text="UREDI"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
