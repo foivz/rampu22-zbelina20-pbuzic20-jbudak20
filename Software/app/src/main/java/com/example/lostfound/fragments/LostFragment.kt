@@ -21,7 +21,6 @@ import com.example.lostfound.adapters.PostAdapter
 import com.example.lostfound.databinding.FragmentLostBinding
 import com.example.lostfound.entities.Post
 import com.example.lostfound.entities.User
-import com.example.lostfound.helpers.FirebaseService
 import com.google.firebase.database.*
 
 
@@ -76,7 +75,7 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
     //Za povezivanje dohvaćenih podataka s layoutom koristi se PostAdapter
     private fun loadPost(){
         dbRef = FirebaseDatabase.getInstance(databaseRegionURL).getReference("posts")
-        dbRef.addValueEventListener(object : ValueEventListener {
+        dbRef.orderByChild("creationTimeMs").addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 Log.w("DBError", "Neuspješno čitanje podataka: ", error.toException())
             }
@@ -88,6 +87,7 @@ class LostFragment : Fragment(), PostAdapter.ClickListener {
                         val post = p.getValue(Post::class.java)
                         posts.add(post!!)
                     }
+                    posts.sortByDescending { it.creationTimeMs }
                     postAdapter = PostAdapter(this@LostFragment, posts)
                     recyclerView.adapter = postAdapter
                 }

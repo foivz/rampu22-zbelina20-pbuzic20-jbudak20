@@ -80,6 +80,7 @@ class FoundFragment : Fragment(), PostAdapter.ClickListener {
                         val post = p.getValue(Post::class.java)
                         posts.add(post!!)
                     }
+                    posts.sortByDescending { it.creationTimeMs }
                     postAdapter = PostAdapter(this@FoundFragment, posts)
                     recyclerView.adapter = postAdapter
                 }
