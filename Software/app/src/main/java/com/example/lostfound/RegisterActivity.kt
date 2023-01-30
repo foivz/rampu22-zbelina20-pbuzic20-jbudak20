@@ -48,6 +48,7 @@ class RegisterActivity : AppCompatActivity() {
                 Log.w("DBError", "Neuspješno čitanje podataka: ", error.toException())
             }
 
+            //Popunjava se lista "usersList" sa korisnicima koji su upisani u bazi podataka
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()) {
                     for(u in snapshot.children) {
@@ -68,6 +69,8 @@ class RegisterActivity : AppCompatActivity() {
 
         val isDataValid = validateEnteredData(email, name, password, phoneNumber, username)
 
+        //Ukoliko su svi podaci ispravni, kreira se novi "User" objekt koji se zapisuje u bazu podataka
+        //Nakon uspješne registracije korisnika se redirecta na prijavu
         if(isDataValid) {
             val newUser = User(email, name, password, phoneNumber, username)
 
@@ -85,6 +88,9 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    //Provjera jesu li uneseni svi podaci sa forme i jesu li uneseni u točnom formatu
+    //Email mora sadržavati jedan "@" i jednu točku
+    //Provjerava se i je li korisničko ime zauzeto
     private fun validateEnteredData(email : String, name : String, password : String, phone : String, username : String) : Boolean{
         if(email.isBlank() || name.isBlank() || password.isBlank() || phone.isBlank() || username.isBlank()) {
             Toast.makeText(this, "Niste unijeli sve podatke!", Toast.LENGTH_SHORT).show()
@@ -104,6 +110,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    //Provjera je li korisničko ime zauzeto
     private fun checkIfUsernameExists(username : String) : Boolean {
         for(user in usersList) {
             if(user.username == username) {

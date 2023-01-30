@@ -11,11 +11,13 @@ import com.example.lostfound.entities.Comment
 
 class CommentAdapter(private var listComment: MutableList<Comment>) : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
 
+    //Definiranje viewa koji će se koristiti za svaki komentar
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
         val commentView : View = LayoutInflater.from(parent.context).inflate(R.layout.row_comment, parent, false)
         return  CommentViewHolder(commentView)
     }
 
+    //Preko parametra holder prikazujemo točno pravi komentar i sva svojstva za taj komentar (username i text)
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         holder.imageUser.setImageResource(R.drawable.ic_baseline_account_circle_24)
         holder.username.text = listComment[position].uName
@@ -24,7 +26,7 @@ class CommentAdapter(private var listComment: MutableList<Comment>) : RecyclerVi
 
     override fun getItemCount(): Int = listComment.size
 
-
+    //Kreiranje varijabli i inicijalizacija istih, odnosno povezivanje s elementina na layout-u.
     class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val imageUser : ImageView
         val username : TextView
