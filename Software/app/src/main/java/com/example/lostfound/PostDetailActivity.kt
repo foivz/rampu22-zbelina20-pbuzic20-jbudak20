@@ -78,6 +78,8 @@ class PostDetailActivity : AppCompatActivity() {
 
         initRc()
 
+        //Stavljen je onClickListener na gumb, odnosno kada se klikne na gumb 'Komentiraj' provjeri se unos je li sve ispravno
+        // te ako je sve ispravno dodaje se komentar za objavu.
         btnAddComment.setOnClickListener{
             if(provjeriUnos()) {
                 dodajKomentar()
@@ -163,7 +165,7 @@ class PostDetailActivity : AppCompatActivity() {
         }
         return true
     }
-
+    //Koristi se za kreiranje menija koji će sadržavati strelicu za natrag, povećalo (Search) i ikonu grafova za otvaranje grafa.
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         val backButton = menu?.findItem(R.id.btn_back)

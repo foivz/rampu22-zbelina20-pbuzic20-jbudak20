@@ -10,12 +10,14 @@ import com.google.firebase.messaging.RemoteMessage
 
 class PushNotificationService : FirebaseMessagingService() {
 
+    //Metoda koja nam hvata obavijesti. Kao parametar se proslijeđuje poruku koju je dohvaćena. Iz atributa title i
+    // body dohvaća se naslov te tijelo poruke.
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         val title = remoteMessage.notification?.title
         val body = remoteMessage.notification?.body
 
-
+        //Kreira se obavijest gdje se postavlja naslov i tijelo obavijesti.
         val CHANNEL_ID = "NOTIFICATION"
         val channel = NotificationChannel(CHANNEL_ID, "MyNotification", NotificationManager.IMPORTANCE_HIGH)
         getSystemService(NotificationManager::class.java).createNotificationChannel(channel)

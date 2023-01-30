@@ -112,7 +112,9 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
 
     }
-
+    //Metoda koja se koristi za dodavanje objave u bazu. Kod dodavanje objave svaka objava ima nasumični ID tako da ne bi moglo
+    // biti isti naziv ili ID za više objava. Kod dodavanja objave još se definiraju naslov, korisničko ime, opis, adresaslike,
+    // status i vrsta imoveine.
     private fun dodajObjavu() {
         val id = databaseReference.push().key!!
 
@@ -145,15 +147,16 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }
     }
 
+    //Metoda koja služi za učitavanje slike u ImageView. Korisnik odabire sliku koju želi staviti iz galerije.
     private fun dodajSliku(){
         val imageData = imageUri
-        var imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
-            imageName.putFile(imageData).addOnSuccessListener {
-                imageName.downloadUrl.addOnSuccessListener { uri ->
-                    adresaSlike = uri.toString()
-                    dodajObjavu()
-                }
+        val imageName: StorageReference = storage.child("images/" + imageData!!.lastPathSegment)
+        imageName.putFile(imageData).addOnSuccessListener {
+            imageName.downloadUrl.addOnSuccessListener { uri ->
+                adresaSlike = uri.toString()
+                dodajObjavu()
             }
+        }
     }
 
     //Funkcija koja provjerava jesu li ispravno unesene sve vrijednosti
