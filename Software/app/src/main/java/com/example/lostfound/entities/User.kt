@@ -3,6 +3,10 @@ package com.example.lostfound.entities
 import android.os.Parcel
 import android.os.Parcelable
 
+//Klasa "User" je data class, ali ujedno i Parcelable
+//Parcelable se koristi kako bi se instanca klase "User" mogla proslijediti
+//nekoj sljedećoj aktivnosti koristeći "Intent"
+
 data class User(
     val email : String? = null,
     val name : String? = null,

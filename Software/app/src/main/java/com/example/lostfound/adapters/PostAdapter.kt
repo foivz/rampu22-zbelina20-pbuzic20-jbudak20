@@ -1,7 +1,6 @@
 package com.example.lostfound.Adapters
 
 
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ class PostAdapter(val posts: ArrayList<Post>) : RecyclerView.Adapter<PostAdapter
         val text : TextView = view.findViewById(R.id.text)
         val photo: ImageView = view.findViewById(R.id.photo)
         val title : TextView = view.findViewById(R.id.title)
-        val currentTime : TextView = view.findViewById(R.id.tvRelativeTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +26,6 @@ class PostAdapter(val posts: ArrayList<Post>) : RecyclerView.Adapter<PostAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = posts[position].title
-        holder.currentTime.text = DateUtils.getRelativeTimeSpanString(posts[position].creationTimeMs)
         holder.username.text = posts[position].username
         holder.text.text = posts[position].text
         Picasso.get().load(posts[position].photo).into(holder.photo)

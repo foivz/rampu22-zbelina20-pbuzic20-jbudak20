@@ -6,6 +6,17 @@
     <string name="picture">Picture</string>
     <string name="add_picture">Add picture</string>
     <string name="cancel">Cancel</string>
+    <string name="lost_fragment">LostFragment</string>
+    <string name="found_fragment">FoundFragment</string>
+    <string name="title">title</string>
+    <string-array name="property_type">
+        <item>Tehnologija</item>
+        <item>Odjeća/Obuća</item>
+        <item>Razno</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="odustani">Odustani</string>
+    <string name="dodaj_objavu">Dodaj objavu</string>
+    <string name="dodaj_sliku">Dodaj sliku</string>
 </resources>
