@@ -60,7 +60,7 @@ class PostDetailActivity : AppCompatActivity() {
         loggedInUser = intent.getStringExtra("logged_user")!!
         val img = intent.getStringExtra("imagePost")
         imagePath = intent.getStringExtra("imagePost").toString()
-        Picasso.get().load(img).into(imagePost)
+        Picasso.get().load(img).fit().into(imagePost)
         val description = intent.getStringExtra("description")
         postDescription.text = description
         val title = intent.getStringExtra("title")

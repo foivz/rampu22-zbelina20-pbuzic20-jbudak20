@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 
 
 class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -146,7 +147,7 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun dodajSliku(){
         val imageData = imageUri
-        val imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
+        var imageName:StorageReference = storage.child("images/"+imageData!!.lastPathSegment)
             imageName.putFile(imageData).addOnSuccessListener {
                 imageName.downloadUrl.addOnSuccessListener { uri ->
                     adresaSlike = uri.toString()
@@ -179,7 +180,8 @@ class CreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     val pickImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if(result.resultCode == RESULT_OK){
             imageUri = result.data?.data!!
-            binding.ivPicture.setImageURI(imageUri)
+            Picasso.get().load(imageUri).fit().into(binding.ivPicture)
+            //binding.ivPicture.setImageURI(imageUri)
         }
     }
 }

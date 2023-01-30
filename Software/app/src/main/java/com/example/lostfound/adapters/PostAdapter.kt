@@ -32,7 +32,7 @@ class PostAdapter(private var clickListener: ClickListener, private var listPost
         holder.currentTime.text = DateUtils.getRelativeTimeSpanString(listPosts[position].creationTimeMs)
         holder.username.text = listPosts[position].username
         holder.text.text = listPosts[position].text
-        Picasso.get().load(listPosts[position].photo).into(holder.photo)
+        Picasso.get().load(listPosts[position].photo).fit().into(holder.photo)
 
         holder.itemView.setOnClickListener {
             clickListener.clickedItem(post)
